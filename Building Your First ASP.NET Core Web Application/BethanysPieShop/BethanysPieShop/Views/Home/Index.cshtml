@@ -1,0 +1,26 @@
+﻿@model HomeViewModel
+
+
+@await Html.PartialAsync("Carousel")
+
+<h2>Pies of the week</h2>
+<h4>Our weekly selection - just for you!</h4>
+
+<div class="row">
+
+    @foreach (var pie in Model.PiesOfTheWeek)
+    {
+        @Html.Partial("PieOfTheWeekSummary", pie)
+    }
+
+</div>
+
+
+
+
+@*<div>
+    
+    Lemon drops oat cake sesame snaps lemon drops pudding chocolate chocolate pie cheesecake. Chocolate cake halvah carrot cake. Jelly beans jelly-o dragée ice cream wafer. Topping cotton candy icing halvah cupcake jelly chocolate cake. Chocolate ice cream dessert tart biscuit dessert. Tart sweet pudding. Chocolate bar biscuit chocolate tootsie roll pudding chocolate cake. Fruitcake dessert croissant toffee. Topping pie jelly chocolate bar biscuit liquorice macaroon sesame snaps. Jujubes sesame snaps carrot cake candy gummi bears bonbon soufflé. Chocolate pie candy toffee cheesecake. Marzipan toffee bonbon. Muffin oat cake soufflé jujubes liquorice pudding wafer caramels powder. Cake muffin cookie wafer liquorice tart cookie jelly-o.
+    Jujubes cake cotton candy croissant donut candy canes. Tootsie roll halvah ice cream dessert sugar plum oat cake lollipop jelly toffee. Cake chocolate danish pie lemon drops cupcake danish. Bear claw ice cream chocolate cake muffin sesame snaps. Gummi bears gummies tootsie roll lollipop liquorice macaroon jelly-o lemon drops. Jelly carrot cake cheesecake pie pie gummies tiramisu. Sugar plum wafer croissant pie pastry lollipop tiramisu gingerbread chocolate cake. Gingerbread biscuit jelly-o chocolate cake pie cake. Wafer brownie pie pudding jelly-o pastry. Lollipop muffin cotton candy fruitcake halvah jujubes brownie topping. Jelly gummi bears brownie chocolate donut candy oat cake. Jelly toffee chupa chups tootsie roll gingerbread sweet jelly. Cookie bonbon candy.
+
+</div>*@
