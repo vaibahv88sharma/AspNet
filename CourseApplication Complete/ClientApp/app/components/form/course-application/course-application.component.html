@@ -1,0 +1,12 @@
+﻿<form novalidate autocomplete="off" (ngSubmit)="save()" [formGroup]="caForm">
+    <fieldset>
+
+        <app-card-projection [tabTitle]="cardHeader1">
+            <app-personalinfo [piGrp]="caForm.get('piGroup')" [feErr]="fe"></app-personalinfo>
+            <app-pagination [cardLyt]="piCardLayout"></app-pagination>
+        </app-card-projection>
+
+
+
+    </fieldset>
+</form>

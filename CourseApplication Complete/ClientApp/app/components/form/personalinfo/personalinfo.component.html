@@ -1,0 +1,67 @@
+﻿<div [formGroup]="piGroupForm">
+
+    <div class="form-group row">
+        <label for="vrt_title" class="col-2 col-form-label"
+               [ngClass]="{'invalid-feedback': feError.vrt_title}">Title</label>
+        <div class="col-10">
+            <select class="form-control" name="vrt_title" id="vrt_title" formControlName="vrt_title"
+                    [ngClass]="{'is-invalid': feError.vrt_title}">
+                        <option style="display:none" value=""></option>
+                        <option value="Mr">Mr</option>
+                        <option value="Mrs">Mrs</option>
+                        <option value="Miss">Miss</option>
+                        <option value="Dr">Dr</option>
+            </select>
+            <span class="form-text" *ngIf="feError.vrt_title"
+                  [ngClass]="{'invalid-feedback': feError.vrt_title }">
+                {{feError.vrt_title}}
+            </span>
+        </div>
+    </div>
+    <div class="form-group row">
+        <label for="firstName" class="col-2 col-form-label"
+               [ngClass]="{'invalid-feedback': feError.firstName }">
+            First Name
+        </label>
+        <div class="col-10">
+            <input type="text" class="form-control" id="firstName" name="firstName" placeholder="First Name *" formControlName="firstName"
+                   [ngClass]="{'is-invalid': feError.firstName }">
+            <span class="form-text" *ngIf="feError.firstName"
+                  [ngClass]="{'invalid-feedback': feError.firstName }">
+                {{feError.firstName}}
+            </span>
+        </div>
+    </div>
+    <!--<div class="form-group row">
+        <label for="firstName" class="col-2 col-form-label"
+               [ngClass]="{'invalid-feedback': (piGroupForm.get('firstName').touched || piGroupForm.get('firstName').dirty) && piGroupForm.get('firstName').invalid}">
+            First Name
+        </label>
+        <div class="col-10">
+            <input type="text" class="form-control" id="firstName" name="firstName" placeholder="Last Name *" formControlName="firstName"
+                    [ngClass]="{'is-invalid': (piGroupForm.get('firstName').touched || piGroupForm.get('firstName').dirty) && piGroupForm.get('firstName').invalid}">
+            <span class="form-text" *ngIf="(piGroupForm.get('firstName').touched || piGroupForm.get('firstName').dirty) && piGroupForm.get('firstName').errors"
+                  [ngClass]="{'invalid-feedback': (piGroupForm.get('firstName').touched || piGroupForm.get('firstName').dirty) && piGroupForm.get('firstName').invalid }">
+                <span *ngIf="piGroupForm.get('firstName').errors.required">
+                    Please enter the First name.
+                </span>
+            </span>
+        </div>
+    </div>-->
+    <div class="form-group row">
+        <label for="lastname" class="col-2 col-form-label"
+               [ngClass]="{'invalid-feedback': feError.lastname }">
+            Last Name
+        </label>
+        <div class="col-10">
+            <input type="text" class="form-control" id="lastname" name="lastname" placeholder="Last Name *" formControlName="lastname"
+                   [ngClass]="{'is-invalid': feError.lastname }">
+            <span class="form-text" *ngIf="feError.lastname"
+                  [ngClass]="{'invalid-feedback': feError.lastname }">
+                {{feError.lastname}}
+            </span>
+        </div>
+    </div>
+
+    <email-controls [emailGrp]="piGroupForm.get('emailGroup')" [egErr]="feError"></email-controls>
+</div>
