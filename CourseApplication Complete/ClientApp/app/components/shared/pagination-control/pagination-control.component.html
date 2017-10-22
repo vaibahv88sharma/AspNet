@@ -1,17 +1,16 @@
-﻿<div class="row mt-3">
+﻿<!--<div class="row mt-3">
     <div class="col">
         <div class="float-left w-100">
             <div class="row">
                 <div class="col h5" [hidden]="paginationValidation.yesNoHide">
                     <input type="checkbox" name="isUnderstand" id="isUnderstand" style="transform: scale(2);"
-                           [disabled]="paginationValidation.yesNoDisable"
-                           [(ngModel)]="isUnderstandValue" (change)="isUnderstandChange(isUnderstandValue, $event)" />
+                           [disabled]="paginationValidation.yesNoDisable" 
+                            [(ngModel)]="isUnderstandValue" (change)="isUnderstandChange(isUnderstandValue, $event)"/>
                     <label for="isUnderstand">&nbsp;Yes I understand </label>
                 </div>
                 <div class="col">
-                    <button type="button" class="btn backBtn"
-                            [disabled]="paginationValidation.backBtnDisable" [hidden]="paginationValidation.backBtnHide"
-                            (click)="btnEvent($event, paginationValidation.parentName, 'back')">
+                    <button type="button" class="btn backBtn" 
+                            [disabled]="paginationValidation.backBtnDisable" [hidden]="paginationValidation.backBtnHide">
                         <i class="fa fa-arrow-left" aria-hidden="true"></i>
                         Back
                     </button>
@@ -21,18 +20,17 @@
     </div>
     <div class="col">
         <div class="float-right">
-            <button type="button" class="btn nextBtn mr-4"
+            <button type="button" class="btn nextBtn mr-4" 
                     [disabled]="paginationValidation.saveBtnDisable" [hidden]="paginationValidation.saveBtnHide">
                 <i class="fa fa-floppy-o" aria-hidden="true"></i>
                 Save
             </button>
-            <button type="button" class="btn nextBtn"
+            <button type="button" class="btn nextBtn" 
                     [disabled]="paginationValidation.nextBtnHideDisable" [hidden]="paginationValidation.nextBtnHideHide"
-                    (click)="btnEvent($event, paginationValidation.parentName, 'next')">
+                    (click)="nextClick($event, paginationValidation.parentName)">
                 <i class="fa fa-arrow-right fa-2" aria-hidden="true"></i>
                 Next
             </button>
         </div>
     </div>
-</div>
-
+</div>-->

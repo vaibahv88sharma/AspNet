@@ -1,12 +1,24 @@
 ﻿<form novalidate autocomplete="off" (ngSubmit)="save()" [formGroup]="caForm">
     <fieldset>
 
-        <app-card-projection [tabTitle]="cardHeader1">
-            <app-personalinfo [piGrp]="caForm.get('piGroup')" [feErr]="fe"></app-personalinfo>
-            <app-pagination [cardLyt]="piCardLayout"></app-pagination>
+        <app-card-projection [tabTitle]="formGroupMetadata[0].grouptitle" [hide]="formGroupMetadata[0].hidden">
+            <app-personalinfo [piGrp]="caForm.get('piGroup')"
+                              [piGrpIsVld]="piGroupValid"
+                              [feErr]="fe"
+                              [grpNm]="formGroupMetadata[0].groupName"
+                              (paginationBtnEvt)="paginationBtnEvtNotify($event)">
+            </app-personalinfo>
         </app-card-projection>
 
 
+        <app-card-projection tabTitle="Details" [tabTitle]="formGroupMetadata[1].grouptitle" [hide]="formGroupMetadata[1].hidden">
+            <other-personalinfo [opiGrp]="caForm.get('opiGroup')"
+                                [opiGrpIsVld]="opiGroupValid"
+                                [feErr]="fe"
+                                [grpNm]="formGroupMetadata[1].groupName"
+                                (paginationBtnEvt)="paginationBtnEvtNotify($event)">
+            </other-personalinfo>
+        </app-card-projection>
 
     </fieldset>
 </form>

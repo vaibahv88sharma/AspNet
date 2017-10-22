@@ -17,7 +17,10 @@
 
   <ItemGroup>
     <!-- Files not to publish (note that the 'dist' subfolders are re-added below) -->
+    <Compile Remove="ClientApp\app\components\shared\NewFolder\**" />
     <Content Remove="ClientApp\**" />
+    <EmbeddedResource Remove="ClientApp\app\components\shared\NewFolder\**" />
+    <None Remove="ClientApp\app\components\shared\NewFolder\**" />
   </ItemGroup>
 
   <ItemGroup>
@@ -35,10 +38,6 @@
     <TypeScriptCompile Include="ClientApp\app\components\shared\card\card.component.ts" />
     <TypeScriptCompile Include="ClientApp\app\components\shared\model\card-layout.ts" />
     <TypeScriptCompile Include="ClientApp\app\components\shared\pagination\pagination.component.ts" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="ClientApp\app\components\shared\NewFolder\" />
   </ItemGroup>
 
   <Target Name="DebugRunWebpack" BeforeTargets="Build" Condition=" '$(Configuration)' == 'Debug' And !Exists('wwwroot\dist') ">

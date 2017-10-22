@@ -1,15 +1,15 @@
 <div [formGroup]="emailGroupForm">
 
-  <div class="form-group row">
-    <label class="col-2 col-form-label" [ngClass]="{'invalid-feedback': egError.emailaddress1 }" for="emailaddress1">Email</label>
-    <div class="col-10">
-      <input class="form-control" id="emailaddress1" type="email" placeholder="Email (required)" formControlName="emailaddress1" name="emailaddress1"
-             [ngClass]="{'is-invalid': egError.emailaddress1 }" />
-      <span class="form-text" *ngIf="egError.emailaddress1" [ngClass]="{'invalid-feedback': egError.emailaddress1 }">
-          {{egError.emailaddress1}}
-      </span>
+    <div class="form-group row">
+        <label class="col-2 col-form-label" [ngClass]="{'invalid-feedback': egError.emailaddress1 }" for="emailaddress1">Email</label>
+        <div class="col-10">
+            <input class="form-control" id="emailaddress1" type="email" placeholder="Email (required)" formControlName="emailaddress1" name="emailaddress1"
+                   [ngClass]="{'is-invalid': egError.emailaddress1 }" />
+            <span class="form-text" *ngIf="egError.emailaddress1" [ngClass]="{'invalid-feedback': egError.emailaddress1 }">
+                {{egError.emailaddress1}}
+            </span>
+        </div>
     </div>
-  </div>
 
     <div class="form-group row">
         <label class="col-2 col-form-label" [ngClass]="{'invalid-feedback': (egError.txtConfirmEmail || emailGroupForm.errors) }" for="txtConfirmEmail">Confirm Email</label>
@@ -23,6 +23,6 @@
                 </span>
             </span>
         </div>
-    </div> 
+    </div>
 
 </div>

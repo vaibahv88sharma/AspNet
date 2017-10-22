@@ -1,0 +1,22 @@
+﻿<div [formGroup]="opiGroupForm">
+
+    <div class="form-group row">
+        <label for="birthdate" class="col-2 col-form-label"
+               [ngClass]="{'invalid-feedback': feError.birthdate }">
+            Date of Birth
+        </label>
+        <div class="col-10">
+            <input type="text" class="form-control" id="birthdate" name="birthdate" placeholder="Date of Birth" formControlName="birthdate"
+                   [ngClass]="{'is-invalid': feError.birthdate }">
+            <span class="form-text" *ngIf="feError.birthdate"
+                  [ngClass]="{'invalid-feedback': feError.birthdate }">
+                {{feError.birthdate}}
+            </span>
+        </div>
+    </div>
+
+    <app-pagination [pv]="opiPaginationValidation"
+                    (buttonEvent)="paginationButtonEvent($event)">
+    </app-pagination>
+
+</div>

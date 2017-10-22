@@ -6,11 +6,11 @@
         <div class="col-10">
             <select class="form-control" name="vrt_title" id="vrt_title" formControlName="vrt_title"
                     [ngClass]="{'is-invalid': feError.vrt_title}">
-                        <option style="display:none" value=""></option>
-                        <option value="Mr">Mr</option>
-                        <option value="Mrs">Mrs</option>
-                        <option value="Miss">Miss</option>
-                        <option value="Dr">Dr</option>
+                <option style="display:none" value=""></option>
+                <option value="Mr">Mr</option>
+                <option value="Mrs">Mrs</option>
+                <option value="Miss">Miss</option>
+                <option value="Dr">Dr</option>
             </select>
             <span class="form-text" *ngIf="feError.vrt_title"
                   [ngClass]="{'invalid-feedback': feError.vrt_title }">
@@ -64,4 +64,10 @@
     </div>
 
     <email-controls [emailGrp]="piGroupForm.get('emailGroup')" [egErr]="feError"></email-controls>
+
+    <app-pagination [pv]="piPaginationValidation"
+                    (isUnderstandEvent)="isUnderstandChangeEvent($event)"
+                    (buttonEvent)="paginationButtonEvent($event)">
+    </app-pagination>
+
 </div>

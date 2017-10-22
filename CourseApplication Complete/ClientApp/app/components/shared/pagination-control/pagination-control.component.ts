@@ -17,15 +17,15 @@ import {
 } from '@angular/core';
 import { CardLayout } from '../model/card-layout';
 import { PaginationValidation, PaginationButtonEvent } from "../model/pagination-validation";
-import { FormGroupDetails } from "../model/form-elements";
 
 @Component({
-    selector: 'app-pagination',
-    templateUrl: './pagination.component.html',
-    styleUrls: ['./pagination.component.css']
+    selector: 'pagination-control',
+    templateUrl: './pagination-control.component.html',
+    styleUrls: ['./pagination-control.component.css']
 })
-export class PaginationComponent
-    implements OnChanges, OnInit, DoCheck, AfterContentInit, AfterContentChecked, AfterViewInit, AfterViewChecked, OnDestroy {
+export class PaginationControlComponent
+    implements OnChanges, OnInit, DoCheck, AfterContentInit, AfterContentChecked, AfterViewInit, AfterViewChecked, OnDestroy
+{
     //@Input('cardLyt')
     //public cardLayout: CardLayout;
 
@@ -33,8 +33,7 @@ export class PaginationComponent
     public paginationValidation: PaginationValidation;
 
     @Output() isUnderstandEvent = new EventEmitter<boolean>();
-    //@Output() buttonEvent = new EventEmitter<PaginationButtonEvent>();
-    @Output() buttonEvent = new EventEmitter<FormGroupDetails>();
+    @Output() buttonEvent = new EventEmitter<PaginationButtonEvent>();
 
     public isUnderstandValue = false;
     //public PaginationButtonEvent ev = new PaginationButtonEvent();
@@ -61,19 +60,9 @@ export class PaginationComponent
         this.isUnderstandEvent.emit(isUnderstandValue);
         //console.log('checked');
     }
-    //public nextClick(e: any, parentName: string): void {
-    //    //debugger;
-    //    let ev = new PaginationButtonEvent('next', true, parentName);
-    //    this.buttonEvent.emit(ev);
-    //}
-
-    public btnEvent(e: any, parentName: string, btnName: string): void { //parentTitle: string, 
+    public nextClick(e: any, parentName: string): void {
         //debugger;
-        let ev = new FormGroupDetails(
-            parentName, //"",
-            btnName == 'next' ? true : false,
-            btnName == 'back' ? true : false
-        );
+        let ev = new PaginationButtonEvent('next', true, parentName);
         this.buttonEvent.emit(ev);
     }
 
