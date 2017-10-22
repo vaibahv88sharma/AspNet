@@ -13,8 +13,12 @@ import { HeaderComponent } from './components/header/header.component';
 import { CourseApplicationComponent } from './components/form/course-application/course-application.component';
 import { CardComponent } from './components/shared/card/card.component';
 import { PaginationComponent } from './components/shared/pagination/pagination.component';
+import { PaginationControlComponent } from './components/shared/pagination-control/pagination-control.component';
 import { PersonalinfoComponent } from './components/form/personalinfo/personalinfo.component';
 import { EmailControlsComponent } from './components/form/personalinfo/email-controls/email-controls.component';
+import { HomeDataService } from './components/shared/services/home-data.service';
+import { CommonMethods } from './components/shared/public/common-methods';
+import { OtherPersonalinfoComponent } from './components/form/other-personalinfo/other-personalinfo.component';
 
 @NgModule({
     declarations: [
@@ -26,9 +30,11 @@ import { EmailControlsComponent } from './components/form/personalinfo/email-con
         HeaderComponent,
         CardComponent,
         PaginationComponent,
+        PaginationControlComponent,
         CourseApplicationComponent,
         PersonalinfoComponent,
-        EmailControlsComponent
+        EmailControlsComponent,
+        OtherPersonalinfoComponent
     ],
     imports: [
         CommonModule,
@@ -42,7 +48,8 @@ import { EmailControlsComponent } from './components/form/personalinfo/email-con
             { path: 'fetch-data', component: FetchDataComponent },
             { path: '**', redirectTo: 'home' }
         ])
-    ]
+    ],
+    providers: [HomeDataService, CommonMethods],
 })
 export class AppModuleShared {
 }
