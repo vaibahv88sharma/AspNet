@@ -1,8 +1,10 @@
-﻿import { Component, OnInit } from '@angular/core';
+﻿import { Component, OnInit, OnDestroy } from '@angular/core';
 import { FormGroup, FormBuilder, Validators, AbstractControl, FormArray } from '@angular/forms';  //Reactive Forms
 import 'rxjs/add/operator/debounceTime';
 import { CardLayout } from '../../shared/model/card-layout';
 import { FormElements, FormGroupDetails, IFormGroupMetadata } from '../../shared/model/form-elements';
+import { Subscription } from 'rxjs/Subscription';
+import { ComponentMessageService } from '../../shared/services/component-message.service';
 
 function emailMatcher(c: AbstractControl) {
     let emailControl = c.get('emailaddress1');
@@ -22,19 +24,19 @@ function emailMatcher(c: AbstractControl) {
     styleUrls: ['./course-application.component.css']
 })
 
-export class CourseApplicationComponent implements OnInit {
+export class CourseApplicationComponent implements OnInit, OnDestroy {
     caForm: FormGroup;
-    //private cardHeader1: string;
-    //private cardHeader2: string;
 
-    //private piCardLayout: CardLayout;
     private piGroupValid: boolean;
     private opiGroupValid: boolean;
+    private setMessageOnControlSubscribeRef: Subscription;//any; // Subscribe method reference
+    private checkErrorOnControlSubscribeRef: Subscription;// any; // Subscribe method reference
+    private checkErrorOnGroupSubscribeRef: Subscription;//any; // Subscribe method reference
 
-    constructor(private fb: FormBuilder) {
-        //this.cardHeader1 = "Personal Information";
-        //this.cardHeader2 = "Details";
-        //this.piCardLayout = new CardLayout(true, false, true, true);
+    paginationMessage: FormGroupDetails;
+    paginationMessageSubscription: Subscription;
+
+    constructor(private fb: FormBuilder, private cms: ComponentMessageService) {
     }
 
     ngOnInit(): void {
@@ -57,6 +59,30 @@ export class CourseApplicationComponent implements OnInit {
         });
 
         this.setMessageOnForm(this.caForm);
+
+        this.paginationMessageSubscription = this.cms.getbtnClickNotification().subscribe(message => {
+            debugger;
+            this.paginationMessage = (<any>message).text;
+            Object.keys(this.formGroupMetadata).forEach((index) => {
+                debugger;
+                if ((<any>this.formGroupMetadata)[index].groupName == this.paginationMessage.formGroupName) {
+                    debugger;
+                    if (this.paginationMessage.nextBtnClicked) {
+                        if ((<any>this.formGroupMetadata)[Number(index) + 1]) {
+                            debugger;
+                            (<any>this.formGroupMetadata)[Number(index) + 1].hidden = false;
+                        }
+                    } else {
+                        if ((<any>this.formGroupMetadata)[Number(index) - 1]) {
+                            debugger;
+                            (<any>this.formGroupMetadata)[Number(index) - 1].hidden = false;
+                        }
+                    }
+                    (<any>this.formGroupMetadata)[index].hidden = true;
+                }
+            });
+        });
+
     }
 
     //control validation
@@ -85,31 +111,7 @@ export class CourseApplicationComponent implements OnInit {
         }
 
     };
-    //private formGroupMetadata = {
-    //    bsGroup: {
-    //        name: 'bsGroup',
-    //        title: 'Before You Start',
-    //        hidden: false,
-    //    },
-    //    piGroup: {
-    //        name: 'piGroup',
-    //        title: 'Personal Information',
-    //        hidden: false,
-    //    }
-    //};
 
-    //private formGroupMetadata = [
-    //    {
-    //        groupName: 'bsGroup',
-    //        grouptitle: 'Before You Start',
-    //        hidden: false,
-    //    },
-    //    {
-    //        groupName: 'piGroup',
-    //        grouptitle: 'Personal Information',
-    //        hidden: false,
-    //    }
-    //];
     private formGroupMetadata: Array<IFormGroupMetadata> = [
         {
             groupIndex: 0,
@@ -130,28 +132,14 @@ export class CourseApplicationComponent implements OnInit {
             hidden: true,
         },
     ];
-    //setMessageOnForm(c: FormGroup): void {
-    //    Object.keys(c.controls).forEach((name) => {
-    //        let formControl = c.controls[name];
-    //        if (formControl instanceof FormGroup) {
-    //            this.setMessageOnForm(formControl);
-    //        } else {
-    //            if (formControl instanceof FormArray) {
-    //                this.setMessageOnForm(<FormGroup>formControl.controls[0]);
-    //            }
-    //            formControl.valueChanges.debounceTime(1000).subscribe(value => {
-    //                    this.setMessageOnControl(formControl, name);
-    //                }
-    //            );
-    //        }
-    //    });
-    //}
+
     setMessageOnForm(c: FormGroup): void {
         Object.keys(c.controls).forEach((name) => {
             let formControl = c.controls[name];
             if (formControl instanceof FormGroup) {
                 this.setMessageOnForm(formControl);
-                formControl.valueChanges.subscribe(value => {
+                this.checkErrorOnGroupSubscribeRef = formControl.valueChanges.subscribe(value => {
+                //formControl.valueChanges.subscribe(value => {
                     this.checkErrorOnControl(formControl, name);
                 }
                 );
@@ -159,11 +147,13 @@ export class CourseApplicationComponent implements OnInit {
                 if (formControl instanceof FormArray) {
                     this.setMessageOnForm(<FormGroup>formControl.controls[0]);
                 }
-                formControl.valueChanges.debounceTime(1000).subscribe(value => {
+                this.setMessageOnControlSubscribeRef = formControl.valueChanges.debounceTime(1000).subscribe(value => {
+                //formControl.valueChanges.debounceTime(1000).subscribe(value => {
                     this.setMessageOnControl(formControl, name);
                 }
                 );
-                formControl.valueChanges.subscribe(value => {
+                this.checkErrorOnControlSubscribeRef = formControl.valueChanges.subscribe(value => {
+                //formControl.valueChanges.subscribe(value => {
                     this.checkErrorOnControl(formControl, name);
                 }
                 );
@@ -193,56 +183,33 @@ export class CourseApplicationComponent implements OnInit {
         }
     }
 
-
-    //paginationBtnEvtNotify(formGroupDetails: FormGroupDetails): void {
-    //    //debugger;
-    //    Object.keys(this.formGroupMetadata).forEach((index) => {
-    //        //debugger;
-    //        if ((<any>this.formGroupMetadata)[index].groupName == formGroupDetails.formGroupName) {
-    //            debugger;
-    //            (<any>this.formGroupMetadata)[index].hidden = true;
-    //            console.log('has:- ' + (<any>this.formGroupMetadata)[Number(index) + 1]);
-    //            if ((<any>this.formGroupMetadata)[Number(index)+1]) {
-    //                debugger;
-    //            }
-    //        }
-    //    });
-
-    paginationBtnEvtNotify(formGroupDetails: FormGroupDetails): void {
+    paginationBtnEvtNotify(formGroupDetails: FormGroupDetails): void {   //////   NOT USED -- REPLACED WITH SERIVCE
         //debugger;
         Object.keys(this.formGroupMetadata).forEach((index) => {
             //debugger;
             if ((<any>this.formGroupMetadata)[index].groupName == formGroupDetails.formGroupName) {
-                debugger;
+                //debugger;
                 if (formGroupDetails.nextBtnClicked) {
                     if ((<any>this.formGroupMetadata)[Number(index) + 1]) {
-                        debugger;
+                        //debugger;
                         (<any>this.formGroupMetadata)[Number(index) + 1].hidden = false;
                     }
                 } else {
                     if ((<any>this.formGroupMetadata)[Number(index) - 1]) {
-                        debugger;
+                        //debugger;
                         (<any>this.formGroupMetadata)[Number(index) - 1].hidden = false;
                     }
                 }
                 (<any>this.formGroupMetadata)[index].hidden = true;
             }
         });
-
-
-        //this.paginationBtnEvt = formGroupDetails;
-
-        //formGroupDetails.formGroupName
-
-        //this.paginationBtnEvt.emit(formGroupDetails);
     }
-    //backBtnClicked
-    //:
-    //false
-    //formGroupName
-    //:
-    //"piGroup"
-    //nextBtnClicked
-    //:
-    //true
+
+    ngOnDestroy() {
+        this.setMessageOnControlSubscribeRef.unsubscribe();
+        this.checkErrorOnControlSubscribeRef.unsubscribe();
+        this.checkErrorOnGroupSubscribeRef.unsubscribe();       
+        this.paginationMessageSubscription.unsubscribe();
+    }
+
 }

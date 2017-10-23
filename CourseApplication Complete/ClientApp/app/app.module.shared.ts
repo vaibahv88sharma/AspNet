@@ -19,6 +19,7 @@ import { EmailControlsComponent } from './components/form/personalinfo/email-con
 import { HomeDataService } from './components/shared/services/home-data.service';
 import { CommonMethods } from './components/shared/public/common-methods';
 import { OtherPersonalinfoComponent } from './components/form/other-personalinfo/other-personalinfo.component';
+import { ComponentMessageService } from './components/shared/services/component-message.service';
 
 @NgModule({
     declarations: [
@@ -49,7 +50,7 @@ import { OtherPersonalinfoComponent } from './components/form/other-personalinfo
             { path: '**', redirectTo: 'home' }
         ])
     ],
-    providers: [HomeDataService, CommonMethods],
+    providers: [HomeDataService, CommonMethods, ComponentMessageService],
 })
 export class AppModuleShared {
 }

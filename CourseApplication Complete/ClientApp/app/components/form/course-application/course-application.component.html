@@ -5,8 +5,12 @@
             <app-personalinfo [piGrp]="caForm.get('piGroup')"
                               [piGrpIsVld]="piGroupValid"
                               [feErr]="fe"
-                              [grpNm]="formGroupMetadata[0].groupName"
-                              (paginationBtnEvt)="paginationBtnEvtNotify($event)">
+                              [grpNm]="formGroupMetadata[0].groupName">
+                              <!--(paginationBtnEvt)="paginationBtnEvtNotify($event)">-->
+                <!--
+                    Remove -- (paginationBtnEvt)="paginationBtnEvtNotify($event)"
+                    Add -- 
+                    -->
             </app-personalinfo>
         </app-card-projection>
 
@@ -15,8 +19,8 @@
             <other-personalinfo [opiGrp]="caForm.get('opiGroup')"
                                 [opiGrpIsVld]="opiGroupValid"
                                 [feErr]="fe"
-                                [grpNm]="formGroupMetadata[1].groupName"
-                                (paginationBtnEvt)="paginationBtnEvtNotify($event)">
+                                [grpNm]="formGroupMetadata[1].groupName">
+                                <!--(paginationBtnEvt)="paginationBtnEvtNotify($event)">-->
             </other-personalinfo>
         </app-card-projection>
 

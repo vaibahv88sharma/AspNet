@@ -18,6 +18,7 @@ import {
 import { CardLayout } from '../model/card-layout';
 import { PaginationValidation, PaginationButtonEvent } from "../model/pagination-validation";
 import { FormGroupDetails } from "../model/form-elements";
+import { ComponentMessageService } from '../../shared/services/component-message.service';
 
 @Component({
     selector: 'app-pagination',
@@ -61,6 +62,17 @@ export class PaginationComponent
         this.isUnderstandEvent.emit(isUnderstandValue);
         //console.log('checked');
     }
+
+    constructor(private cms: ComponentMessageService) {
+        //cr = new CompanyRegister();
+    }
+
+    //sendMessage(): void {
+    //    // send message to subscribers via observable subject
+    //    debugger;
+    //    this.cms.sendMessage('Message from Home Component to App Component!');
+    //}
+
     //public nextClick(e: any, parentName: string): void {
     //    //debugger;
     //    let ev = new PaginationButtonEvent('next', true, parentName);
@@ -75,6 +87,9 @@ export class PaginationComponent
             btnName == 'back' ? true : false
         );
         this.buttonEvent.emit(ev);
+        debugger;
+        //this.cms.sendMessage('Message from Home Component to App Component!');
+        this.cms.sendbtnClickNotification(ev);
     }
 
 }

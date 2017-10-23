@@ -61,6 +61,8 @@ export class PersonalinfoComponent
         //cr = new CompanyRegister();
     }
 
+
+
     //ngOnChanges() {
     //    debugger;
     //    console.log(this.feError);
