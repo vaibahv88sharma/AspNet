@@ -1,6 +1,7 @@
 ﻿import { Injectable } from '@angular/core';
 import { Http, Headers, Response } from "@angular/http";
 import { Observable } from "rxjs/Rx";
+//import { AppConfigurableSettings } from './app-configurable.settings';
 
 @Injectable()
 export class HomeDataService {
@@ -9,7 +10,9 @@ export class HomeDataService {
     private urlEmailValidate: string = 'https://api.experianmarketingservices.com/query/EmailValidate/1.0';
     private email1: string = "";
 
-    constructor(private http: Http) {
+    constructor(private http: Http,
+        //private aps: AppConfigurableSettings
+    ) {
     }
 
     postEmailValidate(email: string) {
@@ -33,6 +36,32 @@ export class HomeDataService {
     getData(url: string): Observable<any> {
         return this.http.get(
             url
+        )
+            //.delay(5000)
+            .map(this.handleSuccess)
+            .catch(this.handleError)
+    }
+
+    postgetGetApplicationLookups(url: string) {
+        let data = {};
+        debugger;
+        return this.http.post(
+            url,//AppConfigurableSettings.DATA_API,
+            data,
+            { headers: this.getHeaders("POST.NET") /* , withCredentials: true*/ }
+        )
+            //.delay(5000)
+            .map(this.handleSuccess)
+            .catch(this.handleError)
+    }
+
+    getApplicationLookups(url: string) {
+        let data = {};
+        debugger;
+        return this.http.get(
+            url,//AppConfigurableSettings.DATA_API,
+            //data,
+            { headers: this.getHeaders("GET") /* , withCredentials: true*/ }
         )
             //.delay(5000)
             .map(this.handleSuccess)
@@ -78,17 +107,22 @@ export class HomeDataService {
         //var digest = (<HTMLInputElement>document.getElementById('__REQUESTDIGEST')).value;
 
         //headers.set('X-RequestDigest', digest);
-        //headers.set('Accept', 'application/json;odata=verbose');
+        headers.set('Accept', 'application/json; charset=utf-8');
 
-        headers.set('Auth-Token', this.authToken);
+        //headers.set('Auth-Token', this.authToken);
 
         switch (verb) {
             case "GET":
-                headers.set('content-Type', 'application/application/json');
+                //headers.set('content-Type', 'application/application/json');
+                headers.set('content-Type', 'application/json; charset=utf-8');
                 break;
-            case "POST":
+            case "POST.NET":
                 //headers.set('Content-type', 'application/json;odata=verbose');
-                headers.set('content-Type', 'application/application/json');
+                headers.set('content-Type', 'application/json; charset=utf-8');
+                headers.set('Access-Control-Allow-Origin', '*/*');//'*');
+                //headers.set('Access-Control-Allow-Methods','GET, POST, PATCH, PUT, DELETE, OPTIONS');
+                headers.set('Access-Control-Allow-Headers', 'true');
+                //headers.set('Access-Control-Allow-Credentials', 'Origin, Content-Type, X-Auth-Token');
                 break;
             case "PUT":
                 headers.set('Content-type', 'application/json;odata=verbose');

@@ -20,6 +20,7 @@ import { HomeDataService } from './components/shared/services/home-data.service'
 import { CommonMethods } from './components/shared/public/common-methods';
 import { OtherPersonalinfoComponent } from './components/form/other-personalinfo/other-personalinfo.component';
 import { ComponentMessageService } from './components/shared/services/component-message.service';
+import { AppConfigurableSettings } from './components/shared/services/app-configurable.settings';
 
 @NgModule({
     declarations: [
@@ -50,7 +51,7 @@ import { ComponentMessageService } from './components/shared/services/component-
             { path: '**', redirectTo: 'home' }
         ])
     ],
-    providers: [HomeDataService, CommonMethods, ComponentMessageService],
+    providers: [HomeDataService, CommonMethods, ComponentMessageService, AppConfigurableSettings],
 })
 export class AppModuleShared {
 }

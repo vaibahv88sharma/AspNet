@@ -22,6 +22,19 @@ namespace CourseApplication
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddCors(options => options.AddPolicy("AllowAll", p => p.AllowAnyOrigin()           //Fix API ISSUE
+                                                                        .AllowAnyMethod()               //Fix API ISSUE
+                                                                         .AllowAnyHeader()));           //Fix API ISSUE
+
+            //services.AddCors(options =>
+            //{
+            //    options.AddPolicy("CorsPolicy",
+            //        builder => builder.AllowAnyOrigin()
+            //        .AllowAnyMethod()
+            //        .AllowAnyHeader()
+            //        .AllowCredentials());
+            //});
+
             services.AddMvc();
         }
 
@@ -42,6 +55,20 @@ namespace CourseApplication
             }
 
             app.UseStaticFiles();
+
+            app.UseCors("AllowAll");        
+            //app.UseCors("CorsPolicy");
+
+            //app.UseCors(b => b.AllowAnyHeader().AllowAnyMethod().AllowAnyOrigin().AllowCredentials());
+            //Cors
+            //app.UseCors(builder =>
+            //{
+            //    builder.AllowAnyHeader();
+            //    builder.AllowAnyMethod();
+            //    builder.AllowCredentials();
+            //    builder.AllowAnyOrigin(); // For anyone access.
+            //                              //corsBuilder.WithOrigins("http://localhost:56573"); // for a specific url.
+            //});
 
             app.UseMvc(routes =>
             {

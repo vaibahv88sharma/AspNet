@@ -22,6 +22,7 @@ import { HomeDataService } from '../../shared/services/home-data.service';
 import { PaginationValidation, PaginationButtonEvent } from '../../shared/model/pagination-validation';
 import { CommonMethods } from '../../shared/public/common-methods';
 import { PaginationComponent } from '../../shared/pagination/pagination.component';
+import { AppConfigurableSettings } from '../../shared/services/app-configurable.settings';//'./app-configurable.settings';
 
 @Component({
     selector: 'app-personalinfo',
@@ -72,6 +73,13 @@ export class PersonalinfoComponent
         //console.log(this.groupName);
         //this.piPaginationValidation = new PaginationValidation();
         //this.piPaginationValidation = new PaginationValidation(false, true, true, true, true, true, false, true);
+        this.hds.getApplicationLookups(AppConfigurableSettings.DATA_API +'/GetApplicationAllLookups').subscribe(
+            data => {
+                debugger;
+                //this.formValidation = data.formValidation;
+            },
+            err => { debugger; console.log('get error: ', err) }
+        ); 
     }
 
     ngDoCheck() {
