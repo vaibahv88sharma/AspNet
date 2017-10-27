@@ -59,6 +59,7 @@ export class HomeDataService {
         let data = {};
         debugger;
         return this.http.get(
+            //'http://webapp01d-doc/CourseEnrolment/Pages/ApplicationData.aspx/GetApplicationAllLookups',
             url,//AppConfigurableSettings.DATA_API,
             //data,
             { headers: this.getHeaders("GET") /* , withCredentials: true*/ }
@@ -69,7 +70,7 @@ export class HomeDataService {
     }
 
     private handleSuccess(res: Response) {
-        debugger;
+        //debugger;
         let body = res.json();
         //console.log(body);
 
@@ -119,9 +120,9 @@ export class HomeDataService {
             case "POST.NET":
                 //headers.set('Content-type', 'application/json;odata=verbose');
                 headers.set('content-Type', 'application/json; charset=utf-8');
-                headers.set('Access-Control-Allow-Origin', '*/*');//'*');
+                //headers.set('Access-Control-Allow-Origin', '*/*');//'*');
                 //headers.set('Access-Control-Allow-Methods','GET, POST, PATCH, PUT, DELETE, OPTIONS');
-                headers.set('Access-Control-Allow-Headers', 'true');
+                //headers.set('Access-Control-Allow-Headers', 'true');
                 //headers.set('Access-Control-Allow-Credentials', 'Origin, Content-Type, X-Auth-Token');
                 break;
             case "PUT":
