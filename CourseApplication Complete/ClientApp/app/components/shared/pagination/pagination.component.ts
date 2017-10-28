@@ -87,7 +87,7 @@ export class PaginationComponent
             btnName == 'back' ? true : false
         );
         this.buttonEvent.emit(ev);
-        debugger;
+        //debugger;
         //this.cms.sendMessage('Message from Home Component to App Component!');
         this.cms.sendbtnClickNotification(ev);
     }

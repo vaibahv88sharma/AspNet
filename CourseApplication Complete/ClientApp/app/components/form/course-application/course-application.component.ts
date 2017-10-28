@@ -5,6 +5,9 @@ import { CardLayout } from '../../shared/model/card-layout';
 import { FormElements, FormGroupDetails, IFormGroupMetadata } from '../../shared/model/form-elements';
 import { Subscription } from 'rxjs/Subscription';
 import { ComponentMessageService } from '../../shared/services/component-message.service';
+import { StudentApplicationDataLookup } from '../../shared/model/data-binding';
+import { HomeDataService } from '../../shared/services/home-data.service';
+import { AppConfigurableSettings } from '../../shared/services/app-configurable.settings';//'./app-configurable.settings';
 
 function emailMatcher(c: AbstractControl) {
     let emailControl = c.get('emailaddress1');
@@ -36,15 +39,20 @@ export class CourseApplicationComponent implements OnInit, OnDestroy {
     paginationMessage: FormGroupDetails;
     paginationMessageSubscription: Subscription;
 
-    constructor(private fb: FormBuilder, private cms: ComponentMessageService) {
+    private studentApplicationDataLookup: StudentApplicationDataLookup; // Loopup values from databse
+
+    constructor(private fb: FormBuilder, private cms: ComponentMessageService, private hds: HomeDataService) {
     }
 
     ngOnInit(): void {
+
+        //Create Form Controls
         this.caForm = this.fb.group({
             piGroup: this.fb.group({ //Personal Information
                 vrt_title: ['', [Validators.required]],
                 firstName: ['', [Validators.required]],
                 lastname: ['', [Validators.required]],
+                mobilephone: ['', [Validators.required]],
                 emailGroup: this.fb.group({
                     emailaddress1: ['', [Validators.required, Validators.pattern("[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?")]],
                     txtConfirmEmail: ['', Validators.required],
@@ -58,23 +66,25 @@ export class CourseApplicationComponent implements OnInit, OnDestroy {
             })
         });
 
+        //Set Error/Validation Messages on form
         this.setMessageOnForm(this.caForm);
 
+        // Back/Next Button Click events communication
         this.paginationMessageSubscription = this.cms.getbtnClickNotification().subscribe(message => {
-            debugger;
+            //debugger;
             this.paginationMessage = (<any>message).text;
             Object.keys(this.formGroupMetadata).forEach((index) => {
-                debugger;
+                //debugger;
                 if ((<any>this.formGroupMetadata)[index].groupName == this.paginationMessage.formGroupName) {
-                    debugger;
+                    //debugger;
                     if (this.paginationMessage.nextBtnClicked) {
                         if ((<any>this.formGroupMetadata)[Number(index) + 1]) {
-                            debugger;
+                            //debugger;
                             (<any>this.formGroupMetadata)[Number(index) + 1].hidden = false;
                         }
                     } else {
                         if ((<any>this.formGroupMetadata)[Number(index) - 1]) {
-                            debugger;
+                            //debugger;
                             (<any>this.formGroupMetadata)[Number(index) - 1].hidden = false;
                         }
                     }
@@ -82,6 +92,27 @@ export class CourseApplicationComponent implements OnInit, OnDestroy {
                 }
             });
         });
+
+        //Get Initial Lookup Columns from Database
+        this.hds.getApplicationLookups(AppConfigurableSettings.DATA_API +'/GetApplicationAllLookups').subscribe(
+            data => {
+                //debugger;
+                this.studentApplicationDataLookup = new StudentApplicationDataLookup();
+                this.studentApplicationDataLookup.course = data.d.course;
+                this.studentApplicationDataLookup.campus = data.d.campus;
+                this.studentApplicationDataLookup.courseCampus = data.d.courseCampus;
+                this.studentApplicationDataLookup.country = data.d.country;
+                this.studentApplicationDataLookup.vrt_australiancitizenshipresidency = data.d.vrt_australiancitizenshipresidency;
+                this.studentApplicationDataLookup.vrt_aboriginalortorresstraitislander = data.d.vrt_aboriginalortorresstraitislander;
+                this.studentApplicationDataLookup.txtQualification = data.d.txtQualification;
+                this.studentApplicationDataLookup.state = data.d.state;
+                this.studentApplicationDataLookup.idProof = data.d.idProof;
+                this.studentApplicationDataLookup.whatBroughtYouHere = data.d.whatBroughtYouHere;
+                console.log(this.studentApplicationDataLookup);
+                //this.formValidation = data.formValidation;
+            },
+            err => { debugger; console.log('get error: ', err) }
+        ); 
 
     }
 
@@ -97,6 +128,9 @@ export class CourseApplicationComponent implements OnInit, OnDestroy {
         },
         lastname: {
             required: "Please enter Last Name"
+        },
+        mobilephone: {
+            required: "Please enter Mobile Phone"
         },
         emailaddress1: {
             required: "Please enter email address",

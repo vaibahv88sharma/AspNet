@@ -57,7 +57,7 @@ export class HomeDataService {
 
     getApplicationLookups(url: string) {
         let data = {};
-        debugger;
+        //debugger;
         return this.http.get(
             //'http://webapp01d-doc/CourseEnrolment/Pages/ApplicationData.aspx/GetApplicationAllLookups',
             url,//AppConfigurableSettings.DATA_API,

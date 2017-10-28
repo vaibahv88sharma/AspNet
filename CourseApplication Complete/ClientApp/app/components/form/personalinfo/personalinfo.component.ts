@@ -23,6 +23,7 @@ import { PaginationValidation, PaginationButtonEvent } from '../../shared/model/
 import { CommonMethods } from '../../shared/public/common-methods';
 import { PaginationComponent } from '../../shared/pagination/pagination.component';
 import { AppConfigurableSettings } from '../../shared/services/app-configurable.settings';//'./app-configurable.settings';
+import { StudentApplicationDataLookup } from '../../shared/model/data-binding';
 
 @Component({
     selector: 'app-personalinfo',
@@ -48,7 +49,7 @@ export class PersonalinfoComponent
     @Input('grpNm')
     private groupName: string;
 
-
+    private studentApplicationDataLookup: StudentApplicationDataLookup;
     //@ViewChild(EmailControlsComponent) emailcontrol: EmailControlsComponent;
     //@ViewChild(PaginationComponent) piPaginationComponent: PaginationComponent;
 
@@ -73,13 +74,25 @@ export class PersonalinfoComponent
         //console.log(this.groupName);
         //this.piPaginationValidation = new PaginationValidation();
         //this.piPaginationValidation = new PaginationValidation(false, true, true, true, true, true, false, true);
-        this.hds.getApplicationLookups(AppConfigurableSettings.DATA_API +'/GetApplicationAllLookups').subscribe(
-            data => {
-                debugger;
-                //this.formValidation = data.formValidation;
-            },
-            err => { debugger; console.log('get error: ', err) }
-        ); 
+        //this.hds.getApplicationLookups(AppConfigurableSettings.DATA_API +'/GetApplicationAllLookups').subscribe(
+        //    data => {
+        //        debugger;
+        //        this.studentApplicationDataLookup = new StudentApplicationDataLookup();
+        //        this.studentApplicationDataLookup.course = data.d.course;
+        //        this.studentApplicationDataLookup.campus = data.d.campus;
+        //        this.studentApplicationDataLookup.courseCampus = data.d.courseCampus;
+        //        this.studentApplicationDataLookup.country = data.d.country;
+        //        this.studentApplicationDataLookup.vrt_australiancitizenshipresidency = data.d.vrt_australiancitizenshipresidency;
+        //        this.studentApplicationDataLookup.vrt_aboriginalortorresstraitislander = data.d.vrt_aboriginalortorresstraitislander;
+        //        this.studentApplicationDataLookup.txtQualification = data.d.txtQualification;
+        //        this.studentApplicationDataLookup.state = data.d.state;
+        //        this.studentApplicationDataLookup.idProof = data.d.idProof;
+        //        this.studentApplicationDataLookup.whatBroughtYouHere = data.d.whatBroughtYouHere;
+        //        console.log(this.studentApplicationDataLookup);
+        //        //this.formValidation = data.formValidation;
+        //    },
+        //    err => { debugger; console.log('get error: ', err) }
+        //); 
     }
 
     ngDoCheck() {
