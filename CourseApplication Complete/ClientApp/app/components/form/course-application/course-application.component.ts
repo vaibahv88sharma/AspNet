@@ -38,8 +38,9 @@ export class CourseApplicationComponent implements OnInit, OnDestroy {
 
     paginationMessage: FormGroupDetails;
     paginationMessageSubscription: Subscription;
+    vrt_studiedatkanganinstitutebendigotafebeforeSubscription: Subscription;
 
-    private studentApplicationDataLookup: StudentApplicationDataLookup; // Loopup values from databse
+    private stdAppDataLkp: StudentApplicationDataLookup; // Loopup values from databse
 
     constructor(private fb: FormBuilder, private cms: ComponentMessageService, private hds: HomeDataService) {
     }
@@ -59,17 +60,28 @@ export class CourseApplicationComponent implements OnInit, OnDestroy {
                 }, { validator: emailMatcher })
             }),
             opiGroup: this.fb.group({  // Other Personal Information
-                birthdate: ['', [Validators.required]]
+                birthdate: ['', [Validators.required, Validators.pattern(/^(((0[1-9]|[12]\d|3[01])\/(0[13578]|1[02])\/((19|[2-9]\d)\d{2}))|((0[1-9]|[12]\d|30)\/(0[13456789]|1[012])\/((19|[2-9]\d)\d{2}))|((0[1-9]|1\d|2[0-8])\/02\/((19|[2-9]\d)\d{2}))|(29\/02\/((1[6-9]|[2-9]\d)(0[48]|[2468][048]|[13579][26])|((16|[2468][048]|[3579][26])00))))$/g)]],
+                studentGender: ['', [Validators.required]],
+                address1_postalcode: ['', [Validators.required]],
+                vrt_whatbroughtyoutothekanganinstitutewebsite: ['', [Validators.required]],
+                vrt_studiedatkanganinstitutebendigotafebefore: ['', [Validators.required]],
+                vrt_kibtstudentidnumber : ['']
             }),
             resGroup: this.fb.group({
                 residency: ['', [Validators.required]]
             })
         });
 
+        // Conditional Validation - vrt_studiedatkanganinstitutebendigotafebefore
+        this.vrt_studiedatkanganinstitutebendigotafebeforeSubscription =
+            this.caForm.get('opiGroup.vrt_studiedatkanganinstitutebendigotafebefore')!.valueChanges
+            .subscribe(value => this.sendNotificationToVrt_kibtstudentidnumber(value));
+
         //Set Error/Validation Messages on form
         this.setMessageOnForm(this.caForm);
 
         // Back/Next Button Click events communication
+        //debugger;
         this.paginationMessageSubscription = this.cms.getbtnClickNotification().subscribe(message => {
             //debugger;
             this.paginationMessage = (<any>message).text;
@@ -91,24 +103,27 @@ export class CourseApplicationComponent implements OnInit, OnDestroy {
                     (<any>this.formGroupMetadata)[index].hidden = true;
                 }
             });
+            //debugger;
+            //this.cms.clearSubjectMessage();
         });
 
         //Get Initial Lookup Columns from Database
         this.hds.getApplicationLookups(AppConfigurableSettings.DATA_API +'/GetApplicationAllLookups').subscribe(
             data => {
                 //debugger;
-                this.studentApplicationDataLookup = new StudentApplicationDataLookup();
-                this.studentApplicationDataLookup.course = data.d.course;
-                this.studentApplicationDataLookup.campus = data.d.campus;
-                this.studentApplicationDataLookup.courseCampus = data.d.courseCampus;
-                this.studentApplicationDataLookup.country = data.d.country;
-                this.studentApplicationDataLookup.vrt_australiancitizenshipresidency = data.d.vrt_australiancitizenshipresidency;
-                this.studentApplicationDataLookup.vrt_aboriginalortorresstraitislander = data.d.vrt_aboriginalortorresstraitislander;
-                this.studentApplicationDataLookup.txtQualification = data.d.txtQualification;
-                this.studentApplicationDataLookup.state = data.d.state;
-                this.studentApplicationDataLookup.idProof = data.d.idProof;
-                this.studentApplicationDataLookup.whatBroughtYouHere = data.d.whatBroughtYouHere;
-                console.log(this.studentApplicationDataLookup);
+                this.stdAppDataLkp = new StudentApplicationDataLookup();
+                this.stdAppDataLkp.course = data.d.course;
+                this.stdAppDataLkp.campus = data.d.campus;
+                this.stdAppDataLkp.courseCampus = data.d.courseCampus;
+                this.stdAppDataLkp.country = data.d.country;
+                this.stdAppDataLkp.vrt_australiancitizenshipresidency = data.d.vrt_australiancitizenshipresidency;
+                this.stdAppDataLkp.vrt_aboriginalortorresstraitislander = data.d.vrt_aboriginalortorresstraitislander;
+                this.stdAppDataLkp.txtQualification = data.d.txtQualification;
+                this.stdAppDataLkp.state = data.d.state;
+                this.stdAppDataLkp.idProof = data.d.idProof;
+                this.stdAppDataLkp.whatBroughtYouHere = data.d.whatBroughtYouHere;
+                //debugger;
+                //console.log('opiGroupValid :-  '+this.opiGroupValid);
                 //this.formValidation = data.formValidation;
             },
             err => { debugger; console.log('get error: ', err) }
@@ -142,8 +157,20 @@ export class CourseApplicationComponent implements OnInit, OnDestroy {
         },
         birthdate: {
             required: "Please enter Date of Birth",
+            pattern: "Please enter Birthdate in correct in dd/mm/yyyy format"
+        },
+        studentGender: {
+            required: "Please select the appropriate Gender",
+        },
+        address1_postalcode: {
+            required: "Please Enter Post Code",
+        },
+        vrt_whatbroughtyoutothekanganinstitutewebsite: {
+            required: "Please select the appropriate reason for choosing the our TAFE",
+        },
+        vrt_kibtstudentidnumber: {
+            required: "Please Enter Previous Student Number",
         }
-
     };
 
     private formGroupMetadata: Array<IFormGroupMetadata> = [
@@ -239,11 +266,27 @@ export class CourseApplicationComponent implements OnInit, OnDestroy {
         });
     }
 
+    // Conditional Validation function - vrt_kibtstudentidnumber
+    sendNotificationToVrt_kibtstudentidnumber(notifyVia: number): void {
+        //debugger;
+        const control = this.caForm.get('opiGroup.vrt_kibtstudentidnumber');
+        if (notifyVia == 1) {
+            control!.setValidators(Validators.required);
+        } else {
+            control!.clearValidators();
+        }
+        control!.updateValueAndValidity();
+        //debugger;
+        this.cms.sendVrt_kibtstudentidnumberNotification(notifyVia);
+    }
+
     ngOnDestroy() {
         this.setMessageOnControlSubscribeRef.unsubscribe();
         this.checkErrorOnControlSubscribeRef.unsubscribe();
         this.checkErrorOnGroupSubscribeRef.unsubscribe();       
         this.paginationMessageSubscription.unsubscribe();
+        this.vrt_studiedatkanganinstitutebendigotafebeforeSubscription.unsubscribe();
+        this.cms.clearSubjectMessage();
     }
 
 }

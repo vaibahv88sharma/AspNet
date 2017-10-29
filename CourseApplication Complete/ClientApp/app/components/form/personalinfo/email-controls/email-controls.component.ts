@@ -25,8 +25,8 @@ export class EmailControlsComponent implements OnInit, OnChanges, DoCheck, After
 
     ngOnInit() {
         //debugger;
-        console.log(this.emailGroupForm);
-        console.log(this.egError);
+        //console.log(this.emailGroupForm);
+        //console.log(this.egError);
     }
 
     ngDoCheck() {

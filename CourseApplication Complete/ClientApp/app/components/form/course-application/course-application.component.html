@@ -18,11 +18,11 @@
         <app-card-projection tabTitle="Details" [tabTitle]="formGroupMetadata[1].grouptitle" [hide]="formGroupMetadata[1].hidden">
             <other-personalinfo [opiGrp]="caForm.get('opiGroup')"
                                 [opiGrpIsVld]="opiGroupValid"
+                                [stdntAppDataLkp]="stdAppDataLkp"
                                 [feErr]="fe"
                                 [grpNm]="formGroupMetadata[1].groupName">
                                 <!--(paginationBtnEvt)="paginationBtnEvtNotify($event)">-->
             </other-personalinfo>
         </app-card-projection>
-
     </fieldset>
 </form>
