@@ -17,8 +17,9 @@ import {
 } from '@angular/core';
 import { CardLayout } from '../model/card-layout';
 import { PaginationValidation, PaginationButtonEvent } from "../model/pagination-validation";
-import { FormGroupDetails } from "../model/form-elements";
+import { FormGroupDetails, FormGroupValid } from "../model/form-elements";
 import { ComponentMessageService } from '../../shared/services/component-message.service';
+import { Subscription } from 'rxjs/Subscription';
 
 @Component({
     selector: 'app-pagination',
@@ -31,20 +32,66 @@ export class PaginationComponent
     //public cardLayout: CardLayout;
 
     @Input('pv')
-    public paginationValidation: PaginationValidation;
+    public paginationValidation2: PaginationValidation;
 
     @Output() isUnderstandEvent = new EventEmitter<boolean>();
     //@Output() buttonEvent = new EventEmitter<PaginationButtonEvent>();
     @Output() buttonEvent = new EventEmitter<FormGroupDetails>();
 
+    @Input('frmGrpNm')
+    public formGroupName: string;
+
     public isUnderstandValue = false;
+    private paginationValidation: PaginationValidation = new PaginationValidation();
     //public PaginationButtonEvent ev = new PaginationButtonEvent();
+    fromCAPaginationMessageSubscription: Subscription;
+    fromCAFormGroupValidMessage: FormGroupValid;
 
     ngOnChanges() {
     }
     ngOnInit() {
+        if (this.formGroupName == 'piGroup') {
+            this.paginationValidation = new PaginationValidation(false, true, true, true, true, true, false, true, this.formGroupName);
+        } else {
+            this.paginationValidation = new PaginationValidation(true, true, false, false, true, true, false, false, this.formGroupName);
+        }
+
+        this.fromCAPaginationMessageSubscription = this.cms.getFormgroupValidNotification().subscribe(message => {
+            //debugger;
+            this.fromCAFormGroupValidMessage = (<any>message).text;
+            //debugger;
+            if (this.fromCAFormGroupValidMessage.valid) {
+                if (this.fromCAFormGroupValidMessage.name == this.formGroupName) {
+                    //debugger;
+                    this.paginationValidation = new PaginationValidation(false, false, true, true, true, true, false, true, this.formGroupName);
+                    if (this.isUnderstandValue) {
+                        //debugger;
+                        this.paginationValidation = new PaginationValidation(false, false, true, true, true, true, false, false, this.formGroupName);
+                    } else {
+                        this.paginationValidation = new PaginationValidation(false, false, true, true, true, true, false, true, this.formGroupName);
+                    }
+                }
+                else if (this.fromCAFormGroupValidMessage.name == this.formGroupName) {
+                    //debugger;
+                    this.paginationValidation = new PaginationValidation(true, true, false, false, true, true, false, false, this.formGroupName);
+                }
+            } else {
+                if (this.fromCAFormGroupValidMessage.name == this.formGroupName) {
+                    //debugger;
+                    this.paginationValidation = new PaginationValidation(false, true, true, true, true, true, false, true, this.formGroupName);
+                }
+                else if (this.fromCAFormGroupValidMessage.name == this.formGroupName) {
+                    //debugger;
+                    this.paginationValidation = new PaginationValidation(false, true, true, true, true, true, false, true, this.formGroupName);
+                }
+            }
+        });
     }
     ngDoCheck() {
+        //if (this.isUnderstandValue) {
+        //    debugger;
+        //    console.log('isUnderstandValue:-   ' + this.isUnderstandValue);
+        //}
     }
     ngAfterContentInit() {
     }
@@ -55,11 +102,18 @@ export class PaginationComponent
     ngAfterViewChecked() {
     }
     ngOnDestroy() {
+        this.fromCAPaginationMessageSubscription.unsubscribe();
     }
 
     public isUnderstandChange(isUnderstandValue: boolean, e: any): void {
         //debugger;
-        this.isUnderstandEvent.emit(isUnderstandValue);
+        //this.isUnderstandEvent.emit(isUnderstandValue);
+        if (isUnderstandValue) {
+            //debugger;
+            this.paginationValidation = new PaginationValidation(false, false, true, true, true, true, false, false, 'piGroup');
+        } else {
+            this.paginationValidation = new PaginationValidation(false, false, true, true, true, true, false, true, 'piGroup');
+        }
         //console.log('checked');
     }
 
@@ -78,6 +132,13 @@ export class PaginationComponent
     //    let ev = new PaginationButtonEvent('next', true, parentName);
     //    this.buttonEvent.emit(ev);
     //}
+
+    //this.fromCAPaginationMessageSubscription = this.cms.getbtnClickNotification().subscribe(message => {
+    //    //debugger;
+    //    this.paginationMessage = (<any>message).text;
+    //    //debugger;
+    //    //this.cms.clearSubjectMessage();
+    //});
 
     public btnEvent(e: any, parentName: string, btnName: string): void { //parentTitle: string, 
         //debugger;

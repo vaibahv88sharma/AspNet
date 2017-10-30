@@ -1,13 +1,15 @@
 ﻿import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Subject } from 'rxjs/Subject';
-import { FormGroupDetails } from "../model/form-elements";
+import { FormGroupDetails, FormGroupValid } from "../model/form-elements";
+//import { PaginationValidation } from "../model/pagination-validation";
 
 
 @Injectable()
 export class ComponentMessageService {
     private subject = new Subject<any>();
     private vrt_kibtstudentidnumberSubject = new Subject<any>();
+    private formgroupValidSubject = new Subject<any>();
 
     //sendMessage(message: string) {
     //    this.subject.next({ text: message });
@@ -26,6 +28,13 @@ export class ComponentMessageService {
     }
     getbtnClickNotification(): Observable<FormGroupDetails> {
         return this.subject.asObservable();
+    }
+
+    sendFormgroupValidNotification(message: FormGroupValid) {
+        this.formgroupValidSubject.next({ text: message });
+    }
+    getFormgroupValidNotification(): Observable<FormGroupValid> {
+        return this.formgroupValidSubject.asObservable();
     }
 
     sendVrt_kibtstudentidnumberNotification(message: number) {

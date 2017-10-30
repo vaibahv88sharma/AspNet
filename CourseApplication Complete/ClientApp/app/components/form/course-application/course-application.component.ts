@@ -2,12 +2,13 @@
 import { FormGroup, FormBuilder, Validators, AbstractControl, FormArray } from '@angular/forms';  //Reactive Forms
 import 'rxjs/add/operator/debounceTime';
 import { CardLayout } from '../../shared/model/card-layout';
-import { FormElements, FormGroupDetails, IFormGroupMetadata } from '../../shared/model/form-elements';
+import { FormElements, FormGroupDetails, IFormGroupMetadata, FormGroupValid } from '../../shared/model/form-elements';
 import { Subscription } from 'rxjs/Subscription';
 import { ComponentMessageService } from '../../shared/services/component-message.service';
 import { StudentApplicationDataLookup } from '../../shared/model/data-binding';
 import { HomeDataService } from '../../shared/services/home-data.service';
 import { AppConfigurableSettings } from '../../shared/services/app-configurable.settings';//'./app-configurable.settings';
+import { PaginationValidation } from "../../shared/model/pagination-validation";
 
 function emailMatcher(c: AbstractControl) {
     let emailControl = c.get('emailaddress1');
@@ -238,6 +239,7 @@ export class CourseApplicationComponent implements OnInit, OnDestroy {
         if (controlName == 'piGroup') {
             //debugger;
             this.piGroupValid = c.valid;
+            this.cms.sendFormgroupValidNotification(new FormGroupValid('piGroup', c.valid));
         }
         else if (controlName == 'opiGroup') {
             this.opiGroupValid = c.valid;

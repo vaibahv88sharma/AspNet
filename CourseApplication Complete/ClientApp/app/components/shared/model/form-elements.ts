@@ -38,6 +38,18 @@ export class FormGroupDetails {
 
 }
 
+export class FormGroupValid {
+
+    public name: string;
+    public valid: boolean;
+
+    constructor(_name: string, _valid: boolean) {
+        this.name = _name;
+        this.valid = _valid;
+    }
+
+}
+
 export interface IFormGroupMetadata {
     groupIndex: number;
     groupName: string;
