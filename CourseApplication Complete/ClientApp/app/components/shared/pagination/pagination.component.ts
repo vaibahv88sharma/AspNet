@@ -50,11 +50,11 @@ export class PaginationComponent
     ngOnChanges() {
     }
     ngOnInit() {
-        if (this.formGroupName == 'piGroup') {
-            this.paginationValidation = new PaginationValidation(false, true, true, true, true, true, false, true, this.formGroupName);
-        } else {
-            this.paginationValidation = new PaginationValidation(true, true, false, false, true, true, false, false, this.formGroupName);
-        }
+        //if (this.formGroupName == 'piGroup') {
+        //    this.paginationValidation = new PaginationValidation(false, true, true, true, true, true, false, true, this.formGroupName);
+        //} else {
+        //    this.paginationValidation = new PaginationValidation(true, true, false, false, true, true, false, false, this.formGroupName);
+        //}
 
         //this.fromCAPaginationMessageSubscription = this.cms.getFormgroupValidNotification().subscribe(message => {
         //    //debugger;
@@ -110,9 +110,11 @@ export class PaginationComponent
         //this.isUnderstandEvent.emit(isUnderstandValue);
         if (isUnderstandValue) {
             //debugger;
-            this.paginationValidation = new PaginationValidation(false, false, true, true, true, true, false, false, 'piGroup');
+            //this.paginationValidation = new PaginationValidation(false, false, true, true, true, true, false, false, 'piGroup');
+            (<any>this.paginationValidation).nextBtnDisable = false;
         } else {
-            this.paginationValidation = new PaginationValidation(false, false, true, true, true, true, false, true, 'piGroup');
+            //this.paginationValidation = new PaginationValidation(false, false, true, true, true, true, false, true, 'piGroup');
+            (<any>this.paginationValidation).nextBtnDisable = true;
         }
         //console.log('checked');
     }

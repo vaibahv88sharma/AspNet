@@ -57,6 +57,7 @@ export interface IFormGroupMetadata {
     groupName: string;
     grouptitle: string;
     hidden: boolean;
+    groupValid: boolean;
     paginationValidation: {
         [paginationValidation: string]: PaginationValidation
     };	

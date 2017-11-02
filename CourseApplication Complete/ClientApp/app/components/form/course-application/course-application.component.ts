@@ -95,8 +95,15 @@ export class CourseApplicationComponent implements OnInit, OnDestroy {
                         if ((<any>this.formGroupMetadata)[Number(index) + 1]) {
                             //debugger;
                             (<any>this.formGroupMetadata)[Number(index) + 1].hidden = false;  // SHOW Next CARD component
-                            (<any>this.formGroupMetadata)[Number(index) + 1].paginationValidation.paginationValidation =  // SHOW - HIDE of PAGINATION component
-                                new PaginationValidation(true, true, false, false, true, true, false, true, (<any>this.formGroupMetadata)[Number(index) + 1].groupName);
+                            //debugger;
+                            //console.log((<any>this.formGroupMetadata)[Number(index) + 1].paginationValidation.paginationValidation );
+                            //(<any>this.formGroupMetadata)[Number(index) + 1].paginationValidation.paginationValidation =  // SHOW - HIDE of PAGINATION component
+                                //new PaginationValidation(true, true, false, false, true, true, false, true, (<any>this.formGroupMetadata)[Number(index) + 1].groupName);
+                            if ((<any>this.formGroupMetadata)[Number(index) + 1].paginationValidation.paginationValidation.groupValid == true) {
+                                (<any>this.formGroupMetadata)[Number(index) + 1].paginationValidation.paginationValidation.nextBtnDisable = false;// SHOW - HIDE of PAGINATION component
+                            } else {
+                                (<any>this.formGroupMetadata)[Number(index) + 1].paginationValidation.paginationValidation.nextBtnDisable = true;// SHOW - HIDE of PAGINATION component
+                            }
                         }
                     } else {
                         if ((<any>this.formGroupMetadata)[Number(index) - 1]) {
@@ -183,6 +190,7 @@ export class CourseApplicationComponent implements OnInit, OnDestroy {
             groupName: 'piGroup',
             grouptitle: 'Before You Start',
             hidden: false,
+            groupValid: false,
             paginationValidation: { 'paginationValidation': new PaginationValidation(false, true, true, true, true, true, false, true, 'piGroup') }
         },
         {
@@ -190,6 +198,7 @@ export class CourseApplicationComponent implements OnInit, OnDestroy {
             groupName: 'opiGroup',
             grouptitle: 'Personal Information',
             hidden: true,
+            groupValid: false,
             paginationValidation: { 'paginationValidation': new PaginationValidation(true, true, false, false, true, true, false, true, 'opiGroup') }
         },
         {
@@ -197,6 +206,7 @@ export class CourseApplicationComponent implements OnInit, OnDestroy {
             groupName: 'resGroup',
             grouptitle: 'Residency and cultural diversity',
             hidden: true,
+            groupValid: false,
             paginationValidation: { 'paginationValidation': new PaginationValidation(true, true, false, false, true, true, false, true, 'resGroup') }
         },
     ];
@@ -243,19 +253,28 @@ export class CourseApplicationComponent implements OnInit, OnDestroy {
     checkErrorOnControl(c: AbstractControl, controlName: string): void {
         //debugger;
         Object.keys(this.formGroupMetadata).forEach((index) => {
+            //debugger;
             if ((<any>this.formGroupMetadata)[index].groupName == controlName) {
+                debugger;
+                (<any>this.formGroupMetadata)[index].paginationValidation.paginationValidation.groupValid = c.valid;
                 if (controlName == 'piGroup') {
                     if (c.valid == true) {
-                        (<any>this.formGroupMetadata)[index].paginationValidation.paginationValidation = new PaginationValidation(false, false, true, true, true, true, false, true, controlName);
+                        //(<any>this.formGroupMetadata)[index].paginationValidation.paginationValidation = new PaginationValidation(false, false, true, true, true, true, false, true, controlName);
+                        (<any>this.formGroupMetadata)[index].paginationValidation.paginationValidation.yesNoDisable = false;
+                        //(<any>this.formGroupMetadata)[index].paginationValidation.paginationValidation.nextBtnDisable = true;
                     } else {
-                        (<any>this.formGroupMetadata)[index].paginationValidation.paginationValidation = new PaginationValidation(false, true, true, true, true, true, false, true, controlName);
+                        //(<any>this.formGroupMetadata)[index].paginationValidation.paginationValidation = new PaginationValidation(false, true, true, true, true, true, false, true, controlName);
+                        (<any>this.formGroupMetadata)[index].paginationValidation.paginationValidation.yesNoDisable = true;
+                        //(<any>this.formGroupMetadata)[index].paginationValidation.paginationValidation.nextBtnDisable = true;
                     }
                 }
                 else {
                     if (c.valid == true) {
-                        (<any>this.formGroupMetadata)[index].paginationValidation.paginationValidation = new PaginationValidation(true, true, false, false, true, true, false, false, controlName);
+                        //(<any>this.formGroupMetadata)[index].paginationValidation.paginationValidation = new PaginationValidation(true, true, false, false, true, true, false, false, controlName);
+                        (<any>this.formGroupMetadata)[index].paginationValidation.paginationValidation.nextBtnDisable = false;
                     } else {
-                        (<any>this.formGroupMetadata)[index].paginationValidation.paginationValidation = new PaginationValidation(true, true, false, false, true, true, false, true, controlName);
+                        //(<any>this.formGroupMetadata)[index].paginationValidation.paginationValidation = new PaginationValidation(true, true, false, false, true, true, false, true, controlName);
+                        (<any>this.formGroupMetadata)[index].paginationValidation.paginationValidation.nextBtnDisable = true;
                     }
                 }
             }
