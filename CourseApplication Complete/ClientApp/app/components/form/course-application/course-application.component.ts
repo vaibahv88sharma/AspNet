@@ -94,6 +94,8 @@ export class CourseApplicationComponent implements OnInit, OnDestroy {
                         if ((<any>this.formGroupMetadata)[Number(index) + 1]) {
                             //debugger;
                             (<any>this.formGroupMetadata)[Number(index) + 1].hidden = false;
+                            (<any>this.formGroupMetadata)[Number(index) + 1].paginationValidation.paginationValidation =
+                                new PaginationValidation(true, true, false, false, true, true, false, true, (<any>this.formGroupMetadata)[Number(index) + 1].groupName);
                         }
                     } else {
                         if ((<any>this.formGroupMetadata)[Number(index) - 1]) {
@@ -180,18 +182,21 @@ export class CourseApplicationComponent implements OnInit, OnDestroy {
             groupName: 'piGroup',
             grouptitle: 'Before You Start',
             hidden: false,
+            paginationValidation: { 'paginationValidation': new PaginationValidation(false, true, true, true, true, true, false, true, 'piGroup') }
         },
         {
             groupIndex: 1,
             groupName: 'opiGroup',
             grouptitle: 'Personal Information',
             hidden: true,
+            paginationValidation: { 'paginationValidation': new PaginationValidation(true, true, false, false, true, true, false, true, 'opiGroup') }
         },
         {
             groupIndex: 1,
             groupName: 'resGroup',
             grouptitle: 'Residency and cultural diversity',
             hidden: true,
+            paginationValidation: { 'paginationValidation': new PaginationValidation(true, true, false, false, true, true, false, true, 'resGroup') }
         },
     ];
 
@@ -236,14 +241,40 @@ export class CourseApplicationComponent implements OnInit, OnDestroy {
     }
     checkErrorOnControl(c: AbstractControl, controlName: string): void {
         //debugger;
-        if (controlName == 'piGroup') {
-            //debugger;
-            this.piGroupValid = c.valid;
-            this.cms.sendFormgroupValidNotification(new FormGroupValid('piGroup', c.valid));
-        }
-        else if (controlName == 'opiGroup') {
-            this.opiGroupValid = c.valid;
-        }
+        Object.keys(this.formGroupMetadata).forEach((index) => {
+            if ((<any>this.formGroupMetadata)[index].groupName == controlName && controlName == 'piGroup') {
+                if (c.valid == true) {
+                    (<any>this.formGroupMetadata)[index].paginationValidation.paginationValidation = new PaginationValidation(false, false, true, true, true, true, false, true, controlName);
+                } else {
+                    (<any>this.formGroupMetadata)[index].paginationValidation.paginationValidation = new PaginationValidation(false, true, true, true, true, true, false, true, controlName);
+                }
+            }
+            else {
+                if (c.valid == true) {
+                    (<any>this.formGroupMetadata)[index].paginationValidation.paginationValidation = new PaginationValidation(true, true, false, false, true, true, false, false, controlName);
+                } else {
+                    (<any>this.formGroupMetadata)[index].paginationValidation.paginationValidation = new PaginationValidation(true, true, false, false, true, true, false, true, controlName);
+                }
+            }
+        });
+
+
+      // if (controlName == 'piGroup') {
+      //     //debugger;
+      //     this.piGroupValid = c.valid;
+      //     //this.cms.sendFormgroupValidNotification(new FormGroupValid('piGroup', c.valid));
+      //     if (c.valid == true) {
+      //         //debugger;
+      //         //console.log((<any>this.formGroupMetadata)[0].paginationValidation.paginationValidation);
+      //         (<any>this.formGroupMetadata)[0].paginationValidation.paginationValidation = new PaginationValidation(false, false, true, true, true, true, false, true, 'piGroup');
+      //         //console.log((<any>this.formGroupMetadata)[0].paginationValidation.paginationValidation);
+      //     } else {
+      //         (<any>this.formGroupMetadata)[0].paginationValidation.paginationValidation = new PaginationValidation(false, true, true, true, true, true, false, true, 'piGroup');
+      //     }
+      // }
+      // else if (controlName == 'opiGroup') {
+      //     this.opiGroupValid = c.valid;
+      // }
     }
 
     paginationBtnEvtNotify(formGroupDetails: FormGroupDetails): void {   //////   NOT USED -- REPLACED WITH SERIVCE

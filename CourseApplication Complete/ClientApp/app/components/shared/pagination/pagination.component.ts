@@ -32,7 +32,7 @@ export class PaginationComponent
     //public cardLayout: CardLayout;
 
     @Input('pv')
-    public paginationValidation2: PaginationValidation;
+    public paginationValidation: PaginationValidation;
 
     @Output() isUnderstandEvent = new EventEmitter<boolean>();
     //@Output() buttonEvent = new EventEmitter<PaginationButtonEvent>();
@@ -42,7 +42,7 @@ export class PaginationComponent
     public formGroupName: string;
 
     public isUnderstandValue = false;
-    private paginationValidation: PaginationValidation = new PaginationValidation();
+    //private paginationValidation: PaginationValidation = new PaginationValidation();
     //public PaginationButtonEvent ev = new PaginationButtonEvent();
     fromCAPaginationMessageSubscription: Subscription;
     fromCAFormGroupValidMessage: FormGroupValid;
@@ -56,36 +56,36 @@ export class PaginationComponent
             this.paginationValidation = new PaginationValidation(true, true, false, false, true, true, false, false, this.formGroupName);
         }
 
-        this.fromCAPaginationMessageSubscription = this.cms.getFormgroupValidNotification().subscribe(message => {
-            //debugger;
-            this.fromCAFormGroupValidMessage = (<any>message).text;
-            //debugger;
-            if (this.fromCAFormGroupValidMessage.valid) {
-                if (this.fromCAFormGroupValidMessage.name == this.formGroupName) {
-                    //debugger;
-                    this.paginationValidation = new PaginationValidation(false, false, true, true, true, true, false, true, this.formGroupName);
-                    if (this.isUnderstandValue) {
-                        //debugger;
-                        this.paginationValidation = new PaginationValidation(false, false, true, true, true, true, false, false, this.formGroupName);
-                    } else {
-                        this.paginationValidation = new PaginationValidation(false, false, true, true, true, true, false, true, this.formGroupName);
-                    }
-                }
-                else if (this.fromCAFormGroupValidMessage.name == this.formGroupName) {
-                    //debugger;
-                    this.paginationValidation = new PaginationValidation(true, true, false, false, true, true, false, false, this.formGroupName);
-                }
-            } else {
-                if (this.fromCAFormGroupValidMessage.name == this.formGroupName) {
-                    //debugger;
-                    this.paginationValidation = new PaginationValidation(false, true, true, true, true, true, false, true, this.formGroupName);
-                }
-                else if (this.fromCAFormGroupValidMessage.name == this.formGroupName) {
-                    //debugger;
-                    this.paginationValidation = new PaginationValidation(false, true, true, true, true, true, false, true, this.formGroupName);
-                }
-            }
-        });
+        //this.fromCAPaginationMessageSubscription = this.cms.getFormgroupValidNotification().subscribe(message => {
+        //    //debugger;
+        //    this.fromCAFormGroupValidMessage = (<any>message).text;
+        //    //debugger;
+        //    if (this.fromCAFormGroupValidMessage.valid) {
+        //        if (this.fromCAFormGroupValidMessage.name == this.formGroupName) {
+        //            //debugger;
+        //            this.paginationValidation = new PaginationValidation(false, false, true, true, true, true, false, true, this.formGroupName);
+        //            if (this.isUnderstandValue) {
+        //                //debugger;
+        //                this.paginationValidation = new PaginationValidation(false, false, true, true, true, true, false, false, this.formGroupName);
+        //            } else {
+        //                this.paginationValidation = new PaginationValidation(false, false, true, true, true, true, false, true, this.formGroupName);
+        //            }
+        //        }
+        //        else if (this.fromCAFormGroupValidMessage.name == this.formGroupName) {
+        //            //debugger;
+        //            this.paginationValidation = new PaginationValidation(true, true, false, false, true, true, false, false, this.formGroupName);
+        //        }
+        //    } else {
+        //        if (this.fromCAFormGroupValidMessage.name == this.formGroupName) {
+        //            //debugger;
+        //            this.paginationValidation = new PaginationValidation(false, true, true, true, true, true, false, true, this.formGroupName);
+        //        }
+        //        else if (this.fromCAFormGroupValidMessage.name == this.formGroupName) {
+        //            //debugger;
+        //            this.paginationValidation = new PaginationValidation(false, true, true, true, true, true, false, true, this.formGroupName);
+        //        }
+        //    }
+        //});
     }
     ngDoCheck() {
         //if (this.isUnderstandValue) {
@@ -102,7 +102,7 @@ export class PaginationComponent
     ngAfterViewChecked() {
     }
     ngOnDestroy() {
-        this.fromCAPaginationMessageSubscription.unsubscribe();
+     //   this.fromCAPaginationMessageSubscription.unsubscribe();
     }
 
     public isUnderstandChange(isUnderstandValue: boolean, e: any): void {
@@ -151,6 +151,7 @@ export class PaginationComponent
         //debugger;
         //this.cms.sendMessage('Message from Home Component to App Component!');
         this.cms.sendbtnClickNotification(ev);
+        //
     }
 
 }

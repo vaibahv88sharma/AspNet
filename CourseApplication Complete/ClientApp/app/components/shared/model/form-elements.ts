@@ -1,4 +1,6 @@
-﻿export class FormElements {
+﻿import { PaginationValidation } from "./pagination-validation";
+
+export class FormElements {
 
     //public vrt_title: string;
     //public firstName: string;
@@ -55,4 +57,7 @@ export interface IFormGroupMetadata {
     groupName: string;
     grouptitle: string;
     hidden: boolean;
+    paginationValidation: {
+        [paginationValidation: string]: PaginationValidation
+    };	
 }

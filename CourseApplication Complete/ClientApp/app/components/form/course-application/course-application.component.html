@@ -12,7 +12,7 @@
                     Add -- 
                     -->
             </app-personalinfo>
-            <app-pagination [frmGrpNm]="formGroupMetadata[0].groupName">
+            <app-pagination [frmGrpNm]="formGroupMetadata[0].groupName" [pv]="formGroupMetadata[0].paginationValidation.paginationValidation">
             </app-pagination>
         </app-card-projection>
 
@@ -25,7 +25,7 @@
                                 [grpNm]="formGroupMetadata[1].groupName">
                                 <!--(paginationBtnEvt)="paginationBtnEvtNotify($event)">-->
             </other-personalinfo>
-            <app-pagination [frmGrpNm]="formGroupMetadata[1].groupName">
+            <app-pagination [frmGrpNm]="formGroupMetadata[1].groupName" [pv]="formGroupMetadata[1].paginationValidation.paginationValidation">
             </app-pagination>
         </app-card-projection>
     </fieldset>

@@ -108,17 +108,17 @@ export class PersonalinfoComponent
         //}
 
         //Pagination Component
-        if (this.piGroupIsValid) {
-            //debugger;
-            this.piPaginationValidation = new PaginationValidation(false, false, true, true, true, true, false, true, this.groupName);
-            if (this.isUnderstand) {
-                this.piPaginationValidation = new PaginationValidation(false, false, true, true, true, true, false, false, this.groupName);
-            }
-
-        } else {
-            //debugger;
-            this.piPaginationValidation = new PaginationValidation(false, true, true, true, true, true, false, true, this.groupName);
-        }
+       //if (this.piGroupIsValid) {
+       //    //debugger;
+       //    this.piPaginationValidation = new PaginationValidation(false, false, true, true, true, true, false, true, this.groupName);
+       //    if (this.isUnderstand) {
+       //        this.piPaginationValidation = new PaginationValidation(false, false, true, true, true, true, false, false, this.groupName);
+       //    }
+       //
+       //} else {
+       //    //debugger;
+       //    this.piPaginationValidation = new PaginationValidation(false, true, true, true, true, true, false, true, this.groupName);
+       //}
         //debugger;
         //console.log(this.nextButtonClick);
         //if (this.nextButtonClick.buttonClicked) {
