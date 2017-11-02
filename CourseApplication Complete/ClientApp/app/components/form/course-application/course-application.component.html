@@ -1,11 +1,12 @@
 ﻿<form novalidate autocomplete="off" (ngSubmit)="save()" [formGroup]="caForm">
     <fieldset>
-
-        <app-card-projection [tabTitle]="formGroupMetadata[0].grouptitle" [hide]="formGroupMetadata[0].hidden">
+        <!--<app-card-projection [tabTitle]="formGroupMetadata[0].grouptitle" [hide]="formGroupMetadata[0].hidden">-->
+        <app-card-projection [tabTitle]="(formGroupMetadata | customfilter:'piGroup')[0].grouptitle" [hide]="(formGroupMetadata | customfilter:'piGroup')[0].hidden">
             <app-personalinfo [piGrp]="caForm.get('piGroup')"
-                              [piGrpIsVld]="piGroupValid"
-                              [feErr]="fe"
+                              [feErr]="fe">
+                              <!--[piGrpIsVld]="piGroupValid"
                               [grpNm]="formGroupMetadata[0].groupName">
+                 -->
                               <!--(paginationBtnEvt)="paginationBtnEvtNotify($event)">-->
                 <!--
                     Remove -- (paginationBtnEvt)="paginationBtnEvtNotify($event)"
@@ -19,11 +20,11 @@
 
         <app-card-projection tabTitle="Details" [tabTitle]="formGroupMetadata[1].grouptitle" [hide]="formGroupMetadata[1].hidden">
             <other-personalinfo [opiGrp]="caForm.get('opiGroup')"
-                                [opiGrpIsVld]="opiGroupValid"
                                 [stdntAppDataLkp]="stdAppDataLkp"
-                                [feErr]="fe"
+                                [feErr]="fe">
+                                <!--[opiGrpIsVld]="opiGroupValid"
                                 [grpNm]="formGroupMetadata[1].groupName">
-                                <!--(paginationBtnEvt)="paginationBtnEvtNotify($event)">-->
+                                (paginationBtnEvt)="paginationBtnEvtNotify($event)">-->
             </other-personalinfo>
             <app-pagination [frmGrpNm]="formGroupMetadata[1].groupName" [pv]="formGroupMetadata[1].paginationValidation.paginationValidation">
             </app-pagination>

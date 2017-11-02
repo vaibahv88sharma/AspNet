@@ -21,6 +21,7 @@ import { CommonMethods } from './components/shared/public/common-methods';
 import { OtherPersonalinfoComponent } from './components/form/other-personalinfo/other-personalinfo.component';
 import { ComponentMessageService } from './components/shared/services/component-message.service';
 import { AppConfigurableSettings } from './components/shared/services/app-configurable.settings';
+import { FilterPipe } from './components/shared/pipe/filter.pipe/filter.pipe';
 
 @NgModule({
     declarations: [
@@ -36,7 +37,8 @@ import { AppConfigurableSettings } from './components/shared/services/app-config
         CourseApplicationComponent,
         PersonalinfoComponent,
         EmailControlsComponent,
-        OtherPersonalinfoComponent
+        OtherPersonalinfoComponent,
+        FilterPipe
     ],
     imports: [
         CommonModule,

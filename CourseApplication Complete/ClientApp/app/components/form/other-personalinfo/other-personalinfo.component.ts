@@ -39,11 +39,11 @@ export class OtherPersonalinfoComponent
     @Input('feErr')
     public feError: FormElements;
 
-    @Input('opiGrpIsVld')
-    public opiGroupIsValid: boolean;
+    //@Input('opiGrpIsVld')
+    //public opiGroupIsValid: boolean;
 
-    @Input('grpNm')
-    private groupName: string;
+    //@Input('grpNm')
+    //private groupName: string;
 
     @Input('stdntAppDataLkp')
     private studentApplicationDataLookup: StudentApplicationDataLookup;
@@ -82,13 +82,13 @@ export class OtherPersonalinfoComponent
     }
 
     ngDoCheck() {
-        if (this.opiGroupIsValid) {
-            //debugger;
-            this.opiPaginationValidation = new PaginationValidation(true, true, false, false, true, true, false, false, this.groupName);
-        } else {
-            //debugger;
-            this.opiPaginationValidation = new PaginationValidation(true, true, false, false, true, true, false, true, this.groupName);
-        }
+      // if (this.opiGroupIsValid) {
+      //     //debugger;
+      //     this.opiPaginationValidation = new PaginationValidation(true, true, false, false, true, true, false, false, this.groupName);
+      // } else {
+      //     //debugger;
+      //     this.opiPaginationValidation = new PaginationValidation(true, true, false, false, true, true, false, true, this.groupName);
+      // }
     }
     ngAfterViewInit() {
         //debugger;

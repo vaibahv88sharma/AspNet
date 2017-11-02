@@ -41,8 +41,8 @@ export class PersonalinfoComponent
     public feError: FormElements;
     //public fe: FormElements = new FormElements();
 
-    @Input('piGrpIsVld')
-    public piGroupIsValid: boolean;
+    //@Input('piGrpIsVld')
+    //public piGroupIsValid: boolean;
 
     @Output() paginationBtnEvt = new EventEmitter<FormGroupDetails>();
 
