@@ -46,8 +46,8 @@ export class PersonalinfoComponent
 
     @Output() paginationBtnEvt = new EventEmitter<FormGroupDetails>();
 
-    @Input('grpNm')
-    private groupName: string;
+   // @Input('grpNm')
+   // private groupName: string;
 
     private studentApplicationDataLookup: StudentApplicationDataLookup;
     //@ViewChild(EmailControlsComponent) emailcontrol: EmailControlsComponent;
@@ -165,12 +165,12 @@ export class PersonalinfoComponent
     //    this.paginationBtnEvnt = buttonClick;
     //    //this.paginationButtonEvent.emit(ev);
     //}
-    paginationButtonEvent(formGroupDetails: FormGroupDetails): void {
-        //debugger;
-        //this.paginationBtnEvt = formGroupDetails;
-
-        this.paginationBtnEvt.emit(formGroupDetails);
-    }
+   // paginationButtonEvent(formGroupDetails: FormGroupDetails): void {
+   //     //debugger;
+   //     //this.paginationBtnEvt = formGroupDetails;
+   //
+   //     this.paginationBtnEvt.emit(formGroupDetails);
+   // }
 
     //    ngOnDestroy() {
     //    }

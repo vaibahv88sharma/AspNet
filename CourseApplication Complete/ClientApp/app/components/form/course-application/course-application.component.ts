@@ -93,8 +93,8 @@ export class CourseApplicationComponent implements OnInit, OnDestroy {
                     if (this.paginationMessage.nextBtnClicked) {
                         if ((<any>this.formGroupMetadata)[Number(index) + 1]) {
                             //debugger;
-                            (<any>this.formGroupMetadata)[Number(index) + 1].hidden = false;
-                            (<any>this.formGroupMetadata)[Number(index) + 1].paginationValidation.paginationValidation =
+                            (<any>this.formGroupMetadata)[Number(index) + 1].hidden = false;  // SHOW - HIDE of CARD component
+                            (<any>this.formGroupMetadata)[Number(index) + 1].paginationValidation.paginationValidation =  // SHOW - HIDE of PAGINATION component
                                 new PaginationValidation(true, true, false, false, true, true, false, true, (<any>this.formGroupMetadata)[Number(index) + 1].groupName);
                         }
                     } else {
