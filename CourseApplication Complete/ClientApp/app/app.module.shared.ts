@@ -22,6 +22,7 @@ import { OtherPersonalinfoComponent } from './components/form/other-personalinfo
 import { ComponentMessageService } from './components/shared/services/component-message.service';
 import { AppConfigurableSettings } from './components/shared/services/app-configurable.settings';
 import { FilterPipe } from './components/shared/pipe/filter.pipe/filter.pipe';
+import { ResidencyAboriginalComponent } from './components/form/res-aboriginal/res-aboriginal.component';
 
 @NgModule({
     declarations: [
@@ -38,7 +39,8 @@ import { FilterPipe } from './components/shared/pipe/filter.pipe/filter.pipe';
         PersonalinfoComponent,
         EmailControlsComponent,
         OtherPersonalinfoComponent,
-        FilterPipe
+        FilterPipe,
+        ResidencyAboriginalComponent
     ],
     imports: [
         CommonModule,

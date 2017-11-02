@@ -1,5 +1,6 @@
 ﻿<form novalidate autocomplete="off" (ngSubmit)="save()" [formGroup]="caForm">
     <fieldset>
+        {{formGroupMetadata | json}}
         <!--<app-card-projection [tabTitle]="formGroupMetadata[0].grouptitle" [hide]="formGroupMetadata[0].hidden">-->
         <app-card-projection [tabTitle]="(formGroupMetadata | customfilter:'piGroup')[0].grouptitle" [hide]="(formGroupMetadata | customfilter:'piGroup')[0].hidden">
             <app-personalinfo [piGrp]="caForm.get('piGroup')"
@@ -13,12 +14,12 @@
                     Add -- 
                     -->
             </app-personalinfo>
-            <app-pagination [frmGrpNm]="formGroupMetadata[0].groupName" [pv]="formGroupMetadata[0].paginationValidation.paginationValidation">
+            <app-pagination [frmGrpNm]="(formGroupMetadata | customfilter:'piGroup')[0].groupName" [pv]="(formGroupMetadata | customfilter:'piGroup')[0].paginationValidation.paginationValidation">
             </app-pagination>
         </app-card-projection>
 
 
-        <app-card-projection tabTitle="Details" [tabTitle]="formGroupMetadata[1].grouptitle" [hide]="formGroupMetadata[1].hidden">
+        <app-card-projection tabTitle="Details" [tabTitle]="(formGroupMetadata | customfilter:'opiGroup')[0].grouptitle" [hide]="(formGroupMetadata | customfilter:'opiGroup')[0].hidden">
             <other-personalinfo [opiGrp]="caForm.get('opiGroup')"
                                 [stdntAppDataLkp]="stdAppDataLkp"
                                 [feErr]="fe">
@@ -26,8 +27,16 @@
                                 [grpNm]="formGroupMetadata[1].groupName">
                                 (paginationBtnEvt)="paginationBtnEvtNotify($event)">-->
             </other-personalinfo>
-            <app-pagination [frmGrpNm]="formGroupMetadata[1].groupName" [pv]="formGroupMetadata[1].paginationValidation.paginationValidation">
+            <app-pagination [frmGrpNm]="(formGroupMetadata | customfilter:'opiGroup')[0].groupName" [pv]="(formGroupMetadata | customfilter:'opiGroup')[0].paginationValidation.paginationValidation">
             </app-pagination>
         </app-card-projection>
+
+        <app-card-projection [tabTitle]="(formGroupMetadata | customfilter:'resGroup')[0].grouptitle" [hide]="(formGroupMetadata | customfilter:'resGroup')[0].hidden">
+            <res-aboriginal [resGrp]="caForm.get('resGroup')" [feErr]="fe" [stdntAppDataLkp]="stdAppDataLkp">
+            </res-aboriginal>
+            <app-pagination [frmGrpNm]="(formGroupMetadata | customfilter:'resGroup')[0].groupName" [pv]="(formGroupMetadata | customfilter:'resGroup')[0].paginationValidation.paginationValidation"> 
+            </app-pagination>
+        </app-card-projection>
+        
     </fieldset>
 </form>
