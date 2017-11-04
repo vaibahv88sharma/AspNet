@@ -9,6 +9,7 @@ import { FormGroupDetails, FormGroupValid } from "../model/form-elements";
 export class ComponentMessageService {
     private subject = new Subject<any>();
     private vrt_kibtstudentidnumberSubject = new Subject<any>();
+    private txtQualificationNotificationSubject = new Subject<any>();
     private formgroupValidSubject = new Subject<any>();
 
     //sendMessage(message: string) {
@@ -43,4 +44,12 @@ export class ComponentMessageService {
     getVrt_kibtstudentidnumberNotification(): Observable<number> {
         return this.vrt_kibtstudentidnumberSubject.asObservable();
     }
+
+    sendTxtQualificationNotification(message: number) {
+        this.txtQualificationNotificationSubject.next({ text: message });
+    }
+    getTxtQualificationNotification(): Observable<number> {
+        return this.txtQualificationNotificationSubject.asObservable();
+    }
+
 }

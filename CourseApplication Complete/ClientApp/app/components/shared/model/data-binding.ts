@@ -44,7 +44,7 @@ export interface IQualification {
     qualification: string;
     selected: boolean;
     internalName: string;
-    qualificationID: number;
+    qualificationID: string;
     qualificationCode: string;
 }
 

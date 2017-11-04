@@ -1,6 +1,5 @@
 ﻿<form novalidate autocomplete="off" (ngSubmit)="save()" [formGroup]="caForm">
     <fieldset>
-        {{formGroupMetadata | json}}
         <!--<app-card-projection [tabTitle]="formGroupMetadata[0].grouptitle" [hide]="formGroupMetadata[0].hidden">-->
         <app-card-projection [tabTitle]="(formGroupMetadata | customfilter:'piGroup')[0].grouptitle" [hide]="(formGroupMetadata | customfilter:'piGroup')[0].hidden">
             <app-personalinfo [piGrp]="caForm.get('piGroup')"
@@ -37,6 +36,13 @@
             <app-pagination [frmGrpNm]="(formGroupMetadata | customfilter:'resGroup')[0].groupName" [pv]="(formGroupMetadata | customfilter:'resGroup')[0].paginationValidation.paginationValidation"> 
             </app-pagination>
         </app-card-projection>
-        
-    </fieldset>
+
+        <app-card-projection [tabTitle]="(formGroupMetadata | customfilter:'pqGroup')[0].grouptitle" [hide]="(formGroupMetadata | customfilter:'pqGroup')[0].hidden">
+            <prev-qual [pqGrp]="caForm.get('pqGroup')" [feErr]="fe" [stdntAppDataLkp]="stdAppDataLkp">
+            </prev-qual>
+            <app-pagination [frmGrpNm]="(formGroupMetadata | customfilter:'pqGroup')[0].groupName" [pv]="(formGroupMetadata | customfilter:'pqGroup')[0].paginationValidation.paginationValidation">
+            </app-pagination>
+        </app-card-projection>
+
+</fieldset>
 </form>

@@ -1,5 +1,5 @@
 ﻿import { Component, OnInit, OnDestroy } from '@angular/core';
-import { FormGroup, FormBuilder, Validators, AbstractControl, FormArray } from '@angular/forms';  //Reactive Forms
+import { FormGroup, FormBuilder, Validators, AbstractControl, FormArray, FormControl } from '@angular/forms';  //Reactive Forms
 import 'rxjs/add/operator/debounceTime';
 import { CardLayout } from '../../shared/model/card-layout';
 import { FormElements, FormGroupDetails, IFormGroupMetadata, FormGroupValid } from '../../shared/model/form-elements';
@@ -22,6 +22,23 @@ function emailMatcher(c: AbstractControl) {
     return { 'match': true };
 }
 
+function validateTxtQualification(formGroup: FormGroup) {
+    for (let key in formGroup.controls) {
+        if (formGroup.controls.hasOwnProperty(key)) {
+            let control: FormControl = <FormControl>formGroup.controls[key];
+            if (control.value) {
+                return null;
+            }
+        }
+    }
+    return { 'qualempty': true };
+    //return {
+        //validateDays: {
+            //valid: false
+        //}
+    //};
+}
+
 @Component({
     selector: 'app-course-application',
     templateUrl: './course-application.component.html',
@@ -36,10 +53,15 @@ export class CourseApplicationComponent implements OnInit, OnDestroy {
     private setMessageOnControlSubscribeRef: Subscription;//any; // Subscribe method reference
     private checkErrorOnControlSubscribeRef: Subscription;// any; // Subscribe method reference
     private checkErrorOnGroupSubscribeRef: Subscription;//any; // Subscribe method reference
+    private txtQualificationFormGroup: FormGroup = new FormGroup({});
+    //private txtQualificationFormGroup: FormGroup = new FormGroup({}, (formGroup: FormGroup) => {
+    //    return validateTxtQualification(formGroup);
+    //});
 
     paginationMessage: FormGroupDetails;
     paginationMessageSubscription: Subscription;
     vrt_studiedatkanganinstitutebendigotafebeforeSubscription: Subscription;
+    txtQualificationSubscription: Subscription;
 
     private stdAppDataLkp: StudentApplicationDataLookup; // Loopup values from databse
 
@@ -47,6 +69,45 @@ export class CourseApplicationComponent implements OnInit, OnDestroy {
     }
 
     ngOnInit(): void {
+
+        //Get Initial Lookup Columns from Database
+        this.hds.getApplicationLookups(AppConfigurableSettings.DATA_API + '/GetApplicationAllLookups').subscribe(
+            data => {
+                //debugger;
+                this.stdAppDataLkp = new StudentApplicationDataLookup();
+                this.stdAppDataLkp.course = data.d.course;
+                this.stdAppDataLkp.campus = data.d.campus;
+                this.stdAppDataLkp.courseCampus = data.d.courseCampus;
+                this.stdAppDataLkp.country = data.d.country;
+                this.stdAppDataLkp.vrt_australiancitizenshipresidency = data.d.vrt_australiancitizenshipresidency;
+                this.stdAppDataLkp.vrt_aboriginalortorresstraitislander = data.d.vrt_aboriginalortorresstraitislander;
+                this.stdAppDataLkp.txtQualification = data.d.txtQualification;
+                this.stdAppDataLkp.state = data.d.state;
+                this.stdAppDataLkp.idProof = data.d.idProof;
+                this.stdAppDataLkp.whatBroughtYouHere = data.d.whatBroughtYouHere;
+                //debugger;
+                //console.log('opiGroupValid :-  '+this.opiGroupValid);
+                //this.formValidation = data.formValidation;
+
+                //debugger;
+                for (let qual of this.stdAppDataLkp.txtQualification) {
+                    let control: FormControl = new FormControl(qual.selected, Validators.required);//qual.selected
+                    this.txtQualificationFormGroup.addControl(qual.internalName, control);
+                }
+                //console.log(this.txtQualificationFormGroup);
+                //let languagesControlArray = new FormArray(this.stdAppDataLkp.txtQualification.map((l) => {
+                //    debugger;
+                //    return new FormGroup({
+                //        //key: new FormControl(l.key),
+                //        //value: new FormControl(l.value),
+                //        checked: new FormControl(false),
+                //    });
+                //}));
+
+            },
+            err => { debugger; console.log('get error: ', err) }
+        ); 
+
 
         //Create Form Controls
         this.caForm = this.fb.group({
@@ -71,6 +132,11 @@ export class CourseApplicationComponent implements OnInit, OnDestroy {
             resGroup: this.fb.group({
                 vrt_australiancitizenshipresidency: ['', [Validators.required]],
                 vrt_aboriginalortorresstraitislander: ['', [Validators.required]]
+            }),
+            pqGroup: this.fb.group({
+                vrt_successfullycompletedqualifications: ['', [Validators.required]],
+                txtQualification: this.txtQualificationFormGroup
+                //txtQualification: [false, [Validators.pattern('true')]]
             })
         });
 
@@ -78,6 +144,11 @@ export class CourseApplicationComponent implements OnInit, OnDestroy {
         this.vrt_studiedatkanganinstitutebendigotafebeforeSubscription =
             this.caForm.get('opiGroup.vrt_studiedatkanganinstitutebendigotafebefore')!.valueChanges
             .subscribe(value => this.sendNotificationToVrt_kibtstudentidnumber(value));
+
+        // Conditional Validation - txtQualification
+        this.txtQualificationSubscription =
+            this.caForm.get('pqGroup.vrt_successfullycompletedqualifications')!.valueChanges
+            .subscribe(value => this.sendNotificationToTxtQualification(value));
 
         //Set Error/Validation Messages on form
         this.setMessageOnForm(this.caForm);
@@ -118,27 +189,6 @@ export class CourseApplicationComponent implements OnInit, OnDestroy {
             //this.cms.clearSubjectMessage();
         });
 
-        //Get Initial Lookup Columns from Database
-        this.hds.getApplicationLookups(AppConfigurableSettings.DATA_API +'/GetApplicationAllLookups').subscribe(
-            data => {
-                //debugger;
-                this.stdAppDataLkp = new StudentApplicationDataLookup();
-                this.stdAppDataLkp.course = data.d.course;
-                this.stdAppDataLkp.campus = data.d.campus;
-                this.stdAppDataLkp.courseCampus = data.d.courseCampus;
-                this.stdAppDataLkp.country = data.d.country;
-                this.stdAppDataLkp.vrt_australiancitizenshipresidency = data.d.vrt_australiancitizenshipresidency;
-                this.stdAppDataLkp.vrt_aboriginalortorresstraitislander = data.d.vrt_aboriginalortorresstraitislander;
-                this.stdAppDataLkp.txtQualification = data.d.txtQualification;
-                this.stdAppDataLkp.state = data.d.state;
-                this.stdAppDataLkp.idProof = data.d.idProof;
-                this.stdAppDataLkp.whatBroughtYouHere = data.d.whatBroughtYouHere;
-                //debugger;
-                //console.log('opiGroupValid :-  '+this.opiGroupValid);
-                //this.formValidation = data.formValidation;
-            },
-            err => { debugger; console.log('get error: ', err) }
-        ); 
 
     }
 
@@ -181,7 +231,19 @@ export class CourseApplicationComponent implements OnInit, OnDestroy {
         },
         vrt_kibtstudentidnumber: {
             required: "Please Enter Previous Student Number",
-        }
+        },
+        vrt_australiancitizenshipresidency: {
+            required: "Please select the appropriate Residency Status",
+        },
+        vrt_aboriginalortorresstraitislander: {
+            required: "Please select the appropriate Aboriginal Status",
+        },
+        vrt_successfullycompletedqualifications: {
+            required: "Please select the appropriate Qualification Status",
+        },
+        txtQualification: {
+            required: "Please select the appropriate Qualifications",
+        },
     };
 
     private formGroupMetadata: Array<IFormGroupMetadata> = [
@@ -208,6 +270,14 @@ export class CourseApplicationComponent implements OnInit, OnDestroy {
             hidden: true,
             groupValid: false,
             paginationValidation: { 'paginationValidation': new PaginationValidation(true, true, false, false, true, true, false, true, 'resGroup') }
+        },
+        {
+            groupIndex: 3,
+            groupName: 'pqGroup',
+            grouptitle: 'Previous Qualifications',
+            hidden: false,
+            groupValid: false,
+            paginationValidation: { 'paginationValidation': new PaginationValidation(true, true, false, false, true, true, false, true, 'pqGroup') }
         },
     ];
 
@@ -255,7 +325,7 @@ export class CourseApplicationComponent implements OnInit, OnDestroy {
         Object.keys(this.formGroupMetadata).forEach((index) => {
             //debugger;
             if ((<any>this.formGroupMetadata)[index].groupName == controlName) {
-                debugger;
+                //debugger;
                 (<any>this.formGroupMetadata)[index].paginationValidation.paginationValidation.groupValid = c.valid;
                 if (controlName == 'piGroup') {
                     if (c.valid == true) {
@@ -350,6 +420,20 @@ export class CourseApplicationComponent implements OnInit, OnDestroy {
         //debugger;
         this.cms.sendVrt_kibtstudentidnumberNotification(notifyVia);
     }
+    
+    // Conditional Validation function - txtQualification
+    sendNotificationToTxtQualification(notifyVia: number): void {
+        //debugger;
+        const control = this.caForm.get('pqGroup.txtQualification');
+        if (notifyVia == 1) {
+            control!.setValidators(validateTxtQualification);
+        } else {
+            control!.clearValidators();
+        }
+        control!.updateValueAndValidity();
+        //debugger;
+        this.cms.sendTxtQualificationNotification(notifyVia);
+    }
 
     ngOnDestroy() {
         this.setMessageOnControlSubscribeRef.unsubscribe();
@@ -357,6 +441,7 @@ export class CourseApplicationComponent implements OnInit, OnDestroy {
         this.checkErrorOnGroupSubscribeRef.unsubscribe();       
         this.paginationMessageSubscription.unsubscribe();
         this.vrt_studiedatkanganinstitutebendigotafebeforeSubscription.unsubscribe();
+        this.txtQualificationSubscription.unsubscribe();
         this.cms.clearSubjectMessage();
     }
 

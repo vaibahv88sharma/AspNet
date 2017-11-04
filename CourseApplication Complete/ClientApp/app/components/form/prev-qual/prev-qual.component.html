@@ -1,0 +1,69 @@
+﻿<div [formGroup]="pqGroupForm">
+    <!--{{studentApplicationDataLookup?.txtQualification | json}}-->
+    <br />
+    
+    <div class="form-group row">
+        <label class="col-5 col-form-label">Have you SUCCESSFULLY COMPLETED any qualifications ?</label>
+        <div class="col-7">
+            <div class="form-check form-check-inline">
+                <label class="form-check-label">
+                    <input class="form-check-input" type="radio" value="1"
+                           formControlName="vrt_successfullycompletedqualifications"> Yes
+                </label>
+            </div>
+            <div class="form-check form-check-inline">
+                <label class="form-check-label">
+                    <input class="form-check-input" type="radio" value="0"
+                           formControlName="vrt_successfullycompletedqualifications"> No
+                </label>
+            </div>
+        </div>
+    </div>
+    <div formGroupName="txtQualification" [hidden]="txtQualificationHidden">
+        <!--t/f-{{pqGroupForm.controls.txtQualification.valid}}-->
+        <!--txtQualificationHidden-->
+
+        <div class="form-group row">
+            <label class="col-form-legend col-5" for="txtQualification"
+                   [ngClass]="{'invalid-feedback': ( pqGroupForm.controls.txtQualification.touched || pqGroupForm.controls.txtQualification.dirty) 
+                                        && ( !pqGroupForm.controls.txtQualification.valid || pqGroupForm.controls.txtQualification.errors ) }">Select All Completed Qualifications:</label>
+            <div class="col-7">
+                <div class="form-check" *ngFor="let controlList of studentApplicationDataLookup?.txtQualification">
+                    <label class="form-check-label"
+                                [ngClass]="{'invalid-feedback': ( pqGroupForm.controls.txtQualification.touched || pqGroupForm.controls.txtQualification.dirty) 
+                                        && ( !pqGroupForm.controls.txtQualification.valid || pqGroupForm.controls.txtQualification.errors ) }"                           
+                           >
+                        <input class="form-check-input" type="checkbox" [formControlName]="controlList.internalName"
+                                    [ngClass]="{'is-invalid': (pqGroupForm.controls.txtQualification.touched || pqGroupForm.controls.txtQualification.dirty) 
+                                                && ( !pqGroupForm.controls.txtQualification.valid || pqGroupForm.controls.txtQualification.errors ) }" 
+                               />
+                        {{controlList.qualification}}
+                    </label>                    
+                </div>
+                <span class="form-text"
+                      *ngIf="(pqGroupForm.controls.txtQualification.touched || pqGroupForm.controls.txtQualification.dirty)
+                                                    && (pqGroupForm.controls.txtQualification.errors)"
+                      [ngClass]="{'invalid-feedback': (pqGroupForm.controls.txtQualification.touched || pqGroupForm.controls.txtQualification.dirty)
+                                                && (!pqGroupForm.controls.txtQualification.valid || pqGroupForm.controls.txtQualification.errors) }">
+                    <span *ngIf="pqGroupForm.controls.txtQualification.errors?.qualempty">
+                        Please select atleast one Qualification.
+                    </span>
+                </span>
+            </div>
+        </div>
+    </div>
+    <!--<div class="form-group row">
+        <label class="col-2 col-form-label" [ngClass]="{'invalid-feedback': (egError.txtConfirmEmail || emailGroupForm.errors) }" for="txtConfirmEmail">Confirm Email</label>
+        <div class="col-10">
+            <input class="form-control" id="confirmEmail" type="email" placeholder="Confirmation Email (required)" formControlName="txtConfirmEmail" name="txtConfirmEmail"
+                   [ngClass]="{'is-invalid': (egError.txtConfirmEmail || emailGroupForm.errors) }" />
+            <span class="form-text" *ngIf="egError.txtConfirmEmail || emailGroupForm.errors?.match" [ngClass]="{'invalid-feedback': (egError.txtConfirmEmail || emailGroupForm.errors) }">
+                {{egError.txtConfirmEmail}}
+                <span *ngIf="emailGroupForm.errors?.match && (!egError.txtConfirmEmail)">
+                    The confirmation does not match the email address.
+                </span>
+            </span>
+        </div>
+    </div>-->
+
+</div>

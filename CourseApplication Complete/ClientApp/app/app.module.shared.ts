@@ -23,6 +23,7 @@ import { ComponentMessageService } from './components/shared/services/component-
 import { AppConfigurableSettings } from './components/shared/services/app-configurable.settings';
 import { FilterPipe } from './components/shared/pipe/filter.pipe/filter.pipe';
 import { ResidencyAboriginalComponent } from './components/form/res-aboriginal/res-aboriginal.component';
+import { PreviousQualificationComponent } from './components/form/prev-qual/prev-qual.component';
 
 @NgModule({
     declarations: [
@@ -40,7 +41,8 @@ import { ResidencyAboriginalComponent } from './components/form/res-aboriginal/r
         EmailControlsComponent,
         OtherPersonalinfoComponent,
         FilterPipe,
-        ResidencyAboriginalComponent
+        ResidencyAboriginalComponent,
+        PreviousQualificationComponent
     ],
     imports: [
         CommonModule,
