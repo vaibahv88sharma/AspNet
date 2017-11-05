@@ -22,6 +22,19 @@ function emailMatcher(c: AbstractControl) {
     return { 'match': true };
 }
 
+//function courseselected(c: AbstractControl) {
+//    let vrt_course = c.get('vrt_course');
+//    //let txtCampus = c.get('txtCampus');
+//    if (vrt_course!.pristine) {
+//        return { 'hascourse': true };
+//    }
+//    debugger;
+//    if (vrt_course!.value) {
+//        return null;        
+//    }    
+//    return { 'hascourse': true };
+//}
+
 function validateTxtQualification(formGroup: FormGroup) {
     for (let key in formGroup.controls) {
         if (formGroup.controls.hasOwnProperty(key)) {
@@ -64,6 +77,10 @@ export class CourseApplicationComponent implements OnInit, OnDestroy {
     txtQualificationSubscription: Subscription;
 
     private stdAppDataLkp: StudentApplicationDataLookup; // Loopup values from databse
+
+    get getCourseCampusArray(): FormArray {
+        return <FormArray>this.caForm.get('ccGroup');
+    }    
 
     constructor(private fb: FormBuilder, private cms: ComponentMessageService, private hds: HomeDataService) {
     }
@@ -121,6 +138,14 @@ export class CourseApplicationComponent implements OnInit, OnDestroy {
                     txtConfirmEmail: ['', Validators.required],
                 }, { validator: emailMatcher })
             }),
+            //ccGroup: this.fb.group({
+            //        vrt_course: ['', [Validators.required]],
+            //        //txtCampus: [{ value: '', disabled: true }, [Validators.required]]
+            //        //txtCampus: [{ value: '', disabled: courseselected }, [Validators.required]]
+            //        txtCampus: ['', [Validators.required]]
+            //    }//, { validator: courseselected }
+            //),
+            ccGroup: this.fb.array([this.buildCourseCampus()]),
             opiGroup: this.fb.group({  // Other Personal Information
                 birthdate: ['', [Validators.required, Validators.pattern(/^(((0[1-9]|[12]\d|3[01])\/(0[13578]|1[02])\/((19|[2-9]\d)\d{2}))|((0[1-9]|[12]\d|30)\/(0[13456789]|1[012])\/((19|[2-9]\d)\d{2}))|((0[1-9]|1\d|2[0-8])\/02\/((19|[2-9]\d)\d{2}))|(29\/02\/((1[6-9]|[2-9]\d)(0[48]|[2468][048]|[13579][26])|((16|[2468][048]|[3579][26])00))))$/g)]],
                 studentGender: ['', [Validators.required]],
@@ -139,6 +164,8 @@ export class CourseApplicationComponent implements OnInit, OnDestroy {
                 //txtQualification: [false, [Validators.pattern('true')]]
             })
         });
+
+        //this.stdAppDataLkp.courseCampus.filter(it => it['courseID'] == this.caForm.get('ccGroup.vrt_course')!.value).length ==0
 
         // Conditional Validation - vrt_studiedatkanganinstitutebendigotafebefore
         this.vrt_studiedatkanganinstitutebendigotafebeforeSubscription =
@@ -192,6 +219,27 @@ export class CourseApplicationComponent implements OnInit, OnDestroy {
 
     }
 
+    buildCourseCampus(): FormGroup {
+        return this.fb.group({
+            vrt_course: ['', [Validators.required]],
+            txtCampus: ['', [Validators.required]]
+        })
+    }
+    addCourseCampus(): void {
+        this.getCourseCampusArray.push(this.buildCourseCampus());
+    }
+    removeCourseCampus(i: number) {
+        this.getCourseCampusArray.controls.splice(i, 1);
+        this.getCourseCampusArray.controls[i - 1].get('txtCampus')!.setValue(this.getCourseCampusArray.controls[i - 1].get('txtCampus')!.value);
+        console.log(this.getCourseCampusArray.controls[i - 1].get('txtCampus'));
+        //this.getCourseCampusArray.reset();
+        //Object.keys((<FormGroup>this.caForm.get('txtQualification'))!.controls).forEach((name) => //formControlNames
+        //{
+        //    //debugger;
+        //    (<FormGroup>this.pqGroupForm.get('txtQualification'))!.controls[name].setValue(false);
+        //});
+    }
+
     //control validation
     private formValidation: Array<any> = [];
     public fe: FormElements = new FormElements();
@@ -215,6 +263,12 @@ export class CourseApplicationComponent implements OnInit, OnDestroy {
         txtConfirmEmail: {
             required: "Please enter email address again",
             match: "Please enter the same email address as mentioned above"
+        },
+        vrt_course: {
+            required: "Please select the appropriate Course",
+        },
+        txtCampus: {
+            required: "Please select the appropriate Campus",
         },
         birthdate: {
             required: "Please enter Date of Birth",
@@ -257,6 +311,14 @@ export class CourseApplicationComponent implements OnInit, OnDestroy {
         },
         {
             groupIndex: 1,
+            groupName: 'ccGroup',
+            grouptitle: 'Course Details',
+            hidden: false,
+            groupValid: false,
+            paginationValidation: { 'paginationValidation': new PaginationValidation(true, true, false, false, true, true, false, true, 'opiGroup') }
+        },
+        {
+            groupIndex: 2,
             groupName: 'opiGroup',
             grouptitle: 'Personal Information',
             hidden: true,
@@ -264,7 +326,7 @@ export class CourseApplicationComponent implements OnInit, OnDestroy {
             paginationValidation: { 'paginationValidation': new PaginationValidation(true, true, false, false, true, true, false, true, 'opiGroup') }
         },
         {
-            groupIndex: 2,
+            groupIndex: 3,
             groupName: 'resGroup',
             grouptitle: 'Residency and cultural diversity',
             hidden: true,
@@ -272,10 +334,10 @@ export class CourseApplicationComponent implements OnInit, OnDestroy {
             paginationValidation: { 'paginationValidation': new PaginationValidation(true, true, false, false, true, true, false, true, 'resGroup') }
         },
         {
-            groupIndex: 3,
+            groupIndex: 4,
             groupName: 'pqGroup',
             grouptitle: 'Previous Qualifications',
-            hidden: false,
+            hidden: true,
             groupValid: false,
             paginationValidation: { 'paginationValidation': new PaginationValidation(true, true, false, false, true, true, false, true, 'pqGroup') }
         },

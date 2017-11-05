@@ -17,6 +17,57 @@
             </app-pagination>
         </app-card-projection>
 
+        <!--<div formArrayName="directorInfoGroupArray" *ngFor="let shareHolder of getDirectorArray.controls; let i=index" class="card text-white bg-secondary mt-2">
+            <div class="card-header">
+                <span>Director {{i+1}}</span>
+                <button type="button" name="rmDirector" id="rmDirector" class="btn btn-danger float-right"
+                        *ngIf="getDirectorArray.controls.length > 1" (click)="removeDirector(i)">
+                    <i class="fa fa-window-close" aria-hidden="true"></i>
+                </button>
+            </div>
+            <div class="card-body">
+                <div [formGroupName]="i">
+                    <director-array [group]="shareHolder" [directorPositionFG]="shareHolder.get('directorPositionArray')"></director-array>
+                </div>
+            </div>
+        </div>-->
+
+        <app-card-projection [tabTitle]="(formGroupMetadata | customfilter:'ccGroup')[0].grouptitle" [hide]="(formGroupMetadata | customfilter:'ccGroup')[0].hidden">
+            {{getCourseCampusArray.valid}}
+            <div formArrayName="ccGroup" *ngFor="let cc of getCourseCampusArray.controls; let i=index" class="border p-3 my-2">
+                <div class="row my-1" *ngIf="getCourseCampusArray.controls.length > 1">
+                    <div class="col">
+                        <span>Course {{i+1}}</span>
+                        <button type="button" name="rmCourseCampus" id="rmCourseCampus" class="btn btn-danger float-right"
+                                 (click)="removeCourseCampus(i)">
+                            <i class="fa fa-window-close" aria-hidden="true"></i>
+                        </button>
+                    </div>
+                </div>
+                <div [formGroupName]="i">
+                    <course-campus [ccGrp]="cc" [feErr]="fe" [stdntAppDataLkp]="stdAppDataLkp">
+                    </course-campus>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col my-2">
+                    <button type="button" class="btn float-right text-white" style="background-color:#0099cc;" [disabled]="!getCourseCampusArray.valid" (click)="addCourseCampus()">
+                        <i class="fa fa-plus fa-2" aria-hidden="true"></i>
+                        Add Another Course
+                    </button>
+                </div>
+            </div>
+            <app-pagination [frmGrpNm]="(formGroupMetadata | customfilter:'ccGroup')[0].groupName" [pv]="(formGroupMetadata | customfilter:'ccGroup')[0].paginationValidation.paginationValidation">
+            </app-pagination>
+        </app-card-projection>
+
+        <!--<app-card-projection [tabTitle]="(formGroupMetadata | customfilter:'ccGroup')[0].grouptitle" [hide]="(formGroupMetadata | customfilter:'ccGroup')[0].hidden">
+            <course-campus [ccGrp]="caForm.get('ccGroup')" [feErr]="fe" [stdntAppDataLkp]="stdAppDataLkp">
+            </course-campus>
+            <app-pagination [frmGrpNm]="(formGroupMetadata | customfilter:'ccGroup')[0].groupName" [pv]="(formGroupMetadata | customfilter:'ccGroup')[0].paginationValidation.paginationValidation">
+            </app-pagination>
+        </app-card-projection>-->
+
 
         <app-card-projection tabTitle="Details" [tabTitle]="(formGroupMetadata | customfilter:'opiGroup')[0].grouptitle" [hide]="(formGroupMetadata | customfilter:'opiGroup')[0].hidden">
             <other-personalinfo [opiGrp]="caForm.get('opiGroup')"

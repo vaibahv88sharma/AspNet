@@ -30,6 +30,7 @@
     <None Remove="ClientApp\app\components\shared\card\card.component.ts" />
     <None Remove="ClientApp\app\components\shared\model\data-binding.ts" />
     <None Remove="ClientApp\app\components\shared\pagination\pagination.component.ts" />
+    <None Remove="ClientApp\app\components\shared\pipe\filter.pipe\filterarray.pipe.ts" />
     <None Remove="ClientApp\app\components\shared\services\app-configurable.settings.ts" />
     <None Remove="ClientApp\app\components\shared\services\component-message.service.ts" />
   </ItemGroup>
@@ -42,6 +43,7 @@
     <TypeScriptCompile Include="ClientApp\app\components\shared\model\card-layout.ts" />
     <TypeScriptCompile Include="ClientApp\app\components\shared\model\data-binding.ts" />
     <TypeScriptCompile Include="ClientApp\app\components\shared\pagination\pagination.component.ts" />
+    <TypeScriptCompile Include="ClientApp\app\components\shared\pipe\filter.pipe\filterarray.pipe.ts" />
     <TypeScriptCompile Include="ClientApp\app\components\shared\services\app-configurable.settings.ts" />
     <TypeScriptCompile Include="ClientApp\app\components\shared\services\component-message.service.ts" />
   </ItemGroup>
