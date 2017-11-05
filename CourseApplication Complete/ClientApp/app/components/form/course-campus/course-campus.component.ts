@@ -78,5 +78,11 @@ export class CourseCampusComponent
         //this.txtQualificationSubscription.unsubscribe();
     }
 
+    vrt_courseClick(e: Event): void {
+        if (this.ccGroupForm.get('vrt_course')!.value) {
+            this.ccGroupForm.get('txtCampus')!.reset({ value: '', disabled: false });
+        }
+        //console.log(this.ccGroupForm.get('vrt_course'));
+    }
 
 }

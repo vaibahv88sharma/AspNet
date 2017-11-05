@@ -3,7 +3,7 @@
         <label for="vrt_course" class="col-3 col-form-label"
                [ngClass]="{'invalid-feedback': feError.vrt_course}">Course</label>
         <div class="col-9">
-            <select class="form-control" name="vrt_course" formControlName="vrt_course">
+            <select class="form-control" name="vrt_course" formControlName="vrt_course" (click)="vrt_courseClick($event)">
                 <option *ngFor="let controlList of studentApplicationDataLookup?.course" [value]="controlList.CourseID">
                     {{controlList.CourseName}}
                 </option>

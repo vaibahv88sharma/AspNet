@@ -222,7 +222,7 @@ export class CourseApplicationComponent implements OnInit, OnDestroy {
     buildCourseCampus(): FormGroup {
         return this.fb.group({
             vrt_course: ['', [Validators.required]],
-            txtCampus: ['', [Validators.required]]
+            txtCampus: [{ value: '', disabled: true }, [Validators.required]]
         })
     }
     addCourseCampus(): void {
@@ -231,7 +231,7 @@ export class CourseApplicationComponent implements OnInit, OnDestroy {
     removeCourseCampus(i: number) {
         this.getCourseCampusArray.controls.splice(i, 1);
         this.getCourseCampusArray.controls[i - 1].get('txtCampus')!.setValue(this.getCourseCampusArray.controls[i - 1].get('txtCampus')!.value);
-        console.log(this.getCourseCampusArray.controls[i - 1].get('txtCampus'));
+        //console.log(this.getCourseCampusArray.controls[i - 1].get('txtCampus'));
         //this.getCourseCampusArray.reset();
         //Object.keys((<FormGroup>this.caForm.get('txtQualification'))!.controls).forEach((name) => //formControlNames
         //{
