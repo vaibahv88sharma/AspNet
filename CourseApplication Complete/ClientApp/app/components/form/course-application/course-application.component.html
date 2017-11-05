@@ -33,7 +33,7 @@
         </div>-->
 
         <app-card-projection [tabTitle]="(formGroupMetadata | customfilter:'ccGroup')[0].grouptitle" [hide]="(formGroupMetadata | customfilter:'ccGroup')[0].hidden">
-            {{getCourseCampusArray.valid}}
+            <!--{{getCourseCampusArray.valid}}-->
             <div formArrayName="ccGroup" *ngFor="let cc of getCourseCampusArray.controls; let i=index" class="border p-3 my-2">
                 <div class="row my-1" *ngIf="getCourseCampusArray.controls.length > 1">
                     <div class="col">

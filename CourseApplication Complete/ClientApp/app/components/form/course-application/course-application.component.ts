@@ -313,9 +313,9 @@ export class CourseApplicationComponent implements OnInit, OnDestroy {
             groupIndex: 1,
             groupName: 'ccGroup',
             grouptitle: 'Course Details',
-            hidden: false,
+            hidden: true,
             groupValid: false,
-            paginationValidation: { 'paginationValidation': new PaginationValidation(true, true, false, false, true, true, false, true, 'opiGroup') }
+            paginationValidation: { 'paginationValidation': new PaginationValidation(true, true, false, false, true, true, false, true, 'ccGroup') }
         },
         {
             groupIndex: 2,
