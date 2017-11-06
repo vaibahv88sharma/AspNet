@@ -75,6 +75,7 @@ export class CourseApplicationComponent implements OnInit, OnDestroy {
     paginationMessageSubscription: Subscription;
     vrt_studiedatkanganinstitutebendigotafebeforeSubscription: Subscription;
     txtQualificationSubscription: Subscription;
+    hasUSISubscription: Subscription;
 
     private stdAppDataLkp: StudentApplicationDataLookup; // Loopup values from databse
 
@@ -162,6 +163,33 @@ export class CourseApplicationComponent implements OnInit, OnDestroy {
                 vrt_successfullycompletedqualifications: ['', [Validators.required]],
                 txtQualification: this.txtQualificationFormGroup
                 //txtQualification: [false, [Validators.pattern('true')]]
+            }),
+            usiGroup: this.fb.group({
+                hasUSI: ['', [Validators.required]],
+                //vrt_uniquestudentidentifier: ['', [Validators.required]],
+                //vrt_permissiontocheckfororcreateausi: ['', [Validators.required]],
+                //applyUSI: ['', [Validators.required]],
+                //streetNumber: ['', [Validators.required]],
+                //streetName: ['', [Validators.required]],
+                //city: ['', [Validators.required]],
+                //state: ['', [Validators.required]],
+                //vrt_CityorTownofBirth: ['', [Validators.required]],
+                //vrt_CountryofBirth: ['', [Validators.required]],
+                //vrt_CountryofResidence: ['', [Validators.required]],
+                //idProofType: ['', [Validators.required]],
+                //idProof: ['', [Validators.required]],
+                vrt_uniquestudentidentifier: [''],
+                vrt_permissiontocheckfororcreateausi: [''],
+                applyUSI: [''],
+                streetNumber: [''],
+                streetName: [''],
+                city: [''],
+                state: [''],
+                vrt_CityorTownofBirth: [''],
+                vrt_CountryofBirth: [''],
+                vrt_CountryofResidence: [''],
+                idProofType: [''],
+                idProof: [''],
             })
         });
 
@@ -176,6 +204,11 @@ export class CourseApplicationComponent implements OnInit, OnDestroy {
         this.txtQualificationSubscription =
             this.caForm.get('pqGroup.vrt_successfullycompletedqualifications')!.valueChanges
             .subscribe(value => this.sendNotificationToTxtQualification(value));
+
+        // Conditional Validation - txtQualification
+        this.hasUSISubscription =
+            this.caForm.get('usiGroup.hasUSI')!.valueChanges
+                .subscribe(value => this.sendNotificationToHasUSI(value));
 
         //Set Error/Validation Messages on form
         this.setMessageOnForm(this.caForm);
@@ -298,6 +331,9 @@ export class CourseApplicationComponent implements OnInit, OnDestroy {
         txtQualification: {
             required: "Please select the appropriate Qualifications",
         },
+        vrt_uniquestudentidentifier: {
+            required: "Please enter USI",
+        },
     };
 
     private formGroupMetadata: Array<IFormGroupMetadata> = [
@@ -340,6 +376,14 @@ export class CourseApplicationComponent implements OnInit, OnDestroy {
             hidden: true,
             groupValid: false,
             paginationValidation: { 'paginationValidation': new PaginationValidation(true, true, false, false, true, true, false, true, 'pqGroup') }
+        },
+        {
+            groupIndex: 5,
+            groupName: 'usiGroup',
+            grouptitle: 'unique student identifier (USI)',
+            hidden: false,
+            groupValid: false,
+            paginationValidation: { 'paginationValidation': new PaginationValidation(true, true, false, false, true, true, false, true, 'usiGroup') }
         },
     ];
 
@@ -497,6 +541,42 @@ export class CourseApplicationComponent implements OnInit, OnDestroy {
         this.cms.sendTxtQualificationNotification(notifyVia);
     }
 
+    //sendHasUSINotification
+    // Conditional Validation function - HasUSI
+    sendNotificationToHasUSI(notifyVia: number): void {
+        //debugger;
+        const control_vrt_uniquestudentidentifier = this.caForm.get('usiGroup.vrt_uniquestudentidentifier');
+        const control_vrt_permissiontocheckfororcreateausi = this.caForm.get('usiGroup.vrt_permissiontocheckfororcreateausi');
+        const control_applyUSI = this.caForm.get('usiGroup.applyUSI');
+        //const control_streetNumber = this.caForm.get('usiGroup.streetNumber');
+        //const control_streetName = this.caForm.get('usiGroup.streetName');
+        //const control_city = this.caForm.get('usiGroup.city');
+        //const control_state = this.caForm.get('usiGroup.state');
+        //const control_vrt_CityorTownofBirth = this.caForm.get('usiGroup.vrt_CityorTownofBirth');
+        //const control_vrt_CountryofBirth = this.caForm.get('usiGroup.vrt_CountryofBirth');
+        //const control_vrt_CountryofResidence = this.caForm.get('usiGroup.vrt_CountryofResidence');
+        //const control_idProofType = this.caForm.get('usiGroup.idProofType');
+        //const control_idProof = this.caForm.get('usiGroup.idProof');
+
+        if (notifyVia == 1) {
+            control_vrt_uniquestudentidentifier!.setValidators(Validators.required);
+            control_vrt_permissiontocheckfororcreateausi!.setValidators(Validators.required);
+
+            control_applyUSI!.clearValidators();
+        } else {
+            control_vrt_uniquestudentidentifier!.clearValidators();
+            control_vrt_permissiontocheckfororcreateausi!.clearValidators();
+
+            control_applyUSI!.setValidators(Validators.required);
+        }
+        control_vrt_uniquestudentidentifier!.updateValueAndValidity();
+        control_vrt_permissiontocheckfororcreateausi!.updateValueAndValidity();
+
+        control_applyUSI!.updateValueAndValidity();
+        //debugger;
+        this.cms.sendHasUSINotification(notifyVia);
+    }
+
     ngOnDestroy() {
         this.setMessageOnControlSubscribeRef.unsubscribe();
         this.checkErrorOnControlSubscribeRef.unsubscribe();
@@ -504,6 +584,7 @@ export class CourseApplicationComponent implements OnInit, OnDestroy {
         this.paginationMessageSubscription.unsubscribe();
         this.vrt_studiedatkanganinstitutebendigotafebeforeSubscription.unsubscribe();
         this.txtQualificationSubscription.unsubscribe();
+        this.hasUSISubscription.unsubscribe();
         this.cms.clearSubjectMessage();
     }
 

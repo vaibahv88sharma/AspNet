@@ -95,5 +95,12 @@
             </app-pagination>
         </app-card-projection>
 
+        <app-card-projection [tabTitle]="(formGroupMetadata | customfilter:'usiGroup')[0].grouptitle" [hide]="(formGroupMetadata | customfilter:'usiGroup')[0].hidden">
+            <usi-details [usiGrp]="caForm.get('usiGroup')" [feErr]="fe" [stdntAppDataLkp]="stdAppDataLkp">
+            </usi-details>
+            <app-pagination [frmGrpNm]="(formGroupMetadata | customfilter:'usiGroup')[0].groupName" [pv]="(formGroupMetadata | customfilter:'usiGroup')[0].paginationValidation.paginationValidation">
+            </app-pagination>
+        </app-card-projection>
+
 </fieldset>
 </form>

@@ -10,6 +10,7 @@ export class ComponentMessageService {
     private subject = new Subject<any>();
     private vrt_kibtstudentidnumberSubject = new Subject<any>();
     private txtQualificationNotificationSubject = new Subject<any>();
+    private hasUSINotificationSubject = new Subject<any>();
     private formgroupValidSubject = new Subject<any>();
 
     //sendMessage(message: string) {
@@ -50,6 +51,13 @@ export class ComponentMessageService {
     }
     getTxtQualificationNotification(): Observable<number> {
         return this.txtQualificationNotificationSubject.asObservable();
+    }
+
+    sendHasUSINotification(message: number) {
+        this.hasUSINotificationSubject.next({ text: message });
+    }
+    getHasUSINotification(): Observable<number> {
+        return this.hasUSINotificationSubject.asObservable();
     }
 
 }

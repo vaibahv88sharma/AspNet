@@ -1,0 +1,76 @@
+﻿<div [formGroup]="usiGroupForm">
+
+    <!--<div [hidden]="true">hihihhihihih</div>
+    v-{{usiGroupForm.get("hasUSI")!.value  && usiGroupForm.get("hasUSI")!.value == 1}}-->
+    <div class="form-group row">
+        <label class="col-4 col-form-label">Do you have a USI?</label>
+        <div class="col-8">
+            <div class="form-check form-check-inline">
+                <label class="form-check-label">
+                    <input class="form-check-input" type="radio" value="1"
+                           formControlName="hasUSI"> Yes
+                </label>
+            </div>
+            <div class="form-check form-check-inline">
+                <label class="form-check-label">
+                    <input class="form-check-input" type="radio" value="0"
+                           formControlName="hasUSI"> No
+                </label>
+            </div>
+        </div>
+    </div>
+    <!--<div [hidden]="hasUSIHiddenControls == true">-->
+    <div [hidden]="!(hasUSIHiddenControls == true)">
+        <div class="form-group row">
+            <label for="vrt_uniquestudentidentifier" class="col-4 col-form-label"
+                   [ngClass]="{'invalid-feedback': feError.vrt_uniquestudentidentifier }">
+                Unique Student Identifier (if known)
+            </label>
+            <div class="col-8">
+                <input type="text" class="form-control" id="vrt_uniquestudentidentifier" name="vrt_uniquestudentidentifier" placeholder="USI *" formControlName="vrt_uniquestudentidentifier"
+                       [ngClass]="{'is-invalid': feError.vrt_uniquestudentidentifier }">
+                <span class="form-text" *ngIf="feError.vrt_uniquestudentidentifier"
+                      [ngClass]="{'invalid-feedback': feError.vrt_uniquestudentidentifier }">
+                    {{feError.vrt_uniquestudentidentifier}}
+                </span>
+            </div>
+        </div>
+        <div class="form-group row">
+            <label class="col-4 col-form-label">Can we have your permission to verify the USI you have supplied with www.usi.gov.au?</label>
+            <div class="col-8">
+                <div class="form-check form-check-inline">
+                    <label class="form-check-label">
+                        <input class="form-check-input" type="radio" value="1"
+                               formControlName="vrt_permissiontocheckfororcreateausi"> Yes
+                    </label>
+                </div>
+                <div class="form-check form-check-inline">
+                    <label class="form-check-label">
+                        <input class="form-check-input" type="radio" value="0"
+                               formControlName="vrt_permissiontocheckfororcreateausi"> No
+                    </label>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--<div [hidden]="hasUSIHiddenControls == false">-->
+    <div [hidden]="!(hasUSIHiddenControls == false)">
+        <div class="form-group row">
+            <label class="col-4 col-form-label">Do you want to register for a USI?</label>
+            <div class="col-8">
+                <div class="form-check form-check-inline">
+                    <label class="form-check-label">
+                        <input class="form-check-input" type="radio" value="1"
+                               formControlName="applyUSI"> Yes
+                    </label>
+                </div>
+                <div class="form-check form-check-inline">
+                    <label class="form-check-label">
+                        <input class="form-check-input" type="radio" value="0"
+                               formControlName="applyUSI"> No
+                    </label>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

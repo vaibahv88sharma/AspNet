@@ -26,6 +26,7 @@ import { ResidencyAboriginalComponent } from './components/form/res-aboriginal/r
 import { PreviousQualificationComponent } from './components/form/prev-qual/prev-qual.component';
 import { CourseCampusComponent } from './components/form/course-campus/course-campus.component';
 import { CustomFilterArrayPipe } from './components/shared/pipe/filter.pipe/filterarray.pipe';
+import { UsiDetailsComponent } from './components/form/usi-details/usi-details.component';
 
 @NgModule({
     declarations: [
@@ -46,7 +47,8 @@ import { CustomFilterArrayPipe } from './components/shared/pipe/filter.pipe/filt
         ResidencyAboriginalComponent,
         PreviousQualificationComponent,
         CourseCampusComponent,
-        CustomFilterArrayPipe
+        CustomFilterArrayPipe,
+        UsiDetailsComponent
     ],
     imports: [
         CommonModule,
