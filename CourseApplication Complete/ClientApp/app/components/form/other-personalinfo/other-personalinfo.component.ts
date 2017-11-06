@@ -65,11 +65,11 @@ export class OtherPersonalinfoComponent
 
     ngOnInit(): void {
         //debugger;
-        this.studentNumberHidden = true;
+        //this.studentNumberHidden = true;
 
         // vrt_whatbroughtyoutothekanganinstitutewebsite Radio Button Click events communication
         this.vrt_kibtstudentidnumberSubscription = this.cms.getVrt_kibtstudentidnumberNotification().subscribe(message => {
-            this.studentNumberHidden = (<any>message).text == 1 ? false : true;
+            //this.studentNumberHidden = (<any>message).text == 1 ? false : true;
             //this.opiGroupForm.patchValue({
             //    vrt_kibtstudentidnumber: (<any>message).text == 1 ? (<any>this.opiGroupForm.get('vrt_kibtstudentidnumber')).value : ""
             //});
@@ -88,7 +88,10 @@ export class OtherPersonalinfoComponent
       // } else {
       //     //debugger;
       //     this.opiPaginationValidation = new PaginationValidation(true, true, false, false, true, true, false, true, this.groupName);
-      // }
+        // }
+        if (this.opiGroupForm.controls['vrt_studiedatkanganinstitutebendigotafebefore']!.value) {
+            this.studentNumberHidden = this.opiGroupForm.controls['vrt_studiedatkanganinstitutebendigotafebefore']!.value == 1 ? true : false;
+        }
     }
     ngAfterViewInit() {
         //debugger;

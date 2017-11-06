@@ -65,7 +65,7 @@ export class PreviousQualificationComponent
     }
 
     ngOnInit(): void {
-        this.txtQualificationHidden = false;
+        //this.txtQualificationHidden = false;
         // vrt_whatbroughtyoutothekanganinstitutewebsite Radio Button Click events communication
         this.txtQualificationSubscription = this.cms.getTxtQualificationNotification().subscribe(message => {
             //this.studentNumberHidden = (<any>message).text == 1 ? false : true;
@@ -88,17 +88,24 @@ export class PreviousQualificationComponent
                     //this.pqGroupForm.get(name).
                     //console.log(this.pqGroupForm.get(name));
                 });
-                this.txtQualificationHidden = true;
-            } else {
-                this.txtQualificationHidden = false;
+                //this.txtQualificationHidden = true;
             }
+            //else {
+            //    this.txtQualificationHidden = false;
+            //}
         });
 
     }
 
     ngDoCheck() {
         //debugger;
-        //console.log(this.pqGroupForm);
+        if (this.pqGroupForm.controls['vrt_successfullycompletedqualifications']!.value) {
+            this.txtQualificationHidden = this.pqGroupForm.controls['vrt_successfullycompletedqualifications']!.value == 1 ? true : false;
+        }
+        //if (this.usiGroupForm.controls['hasUSI']!.value) {
+        //    this.hasUSIHiddenControls = this.usiGroupForm.controls['hasUSI']!.value == 1 ? true : false;
+        //    //console.log(this.hasUSIHiddenControls);
+        //}
     }
     ngAfterViewInit() {
     }
