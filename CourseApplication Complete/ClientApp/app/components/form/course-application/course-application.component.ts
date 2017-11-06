@@ -76,6 +76,7 @@ export class CourseApplicationComponent implements OnInit, OnDestroy {
     vrt_studiedatkanganinstitutebendigotafebeforeSubscription: Subscription;
     txtQualificationSubscription: Subscription;
     hasUSISubscription: Subscription;
+    applyUSISubscription: Subscription;
 
     private stdAppDataLkp: StudentApplicationDataLookup; // Loopup values from databse
 
@@ -205,10 +206,15 @@ export class CourseApplicationComponent implements OnInit, OnDestroy {
             this.caForm.get('pqGroup.vrt_successfullycompletedqualifications')!.valueChanges
             .subscribe(value => this.sendNotificationToTxtQualification(value));
 
-        // Conditional Validation - txtQualification
+        // Conditional Validation - hasUSI
         this.hasUSISubscription =
             this.caForm.get('usiGroup.hasUSI')!.valueChanges
                 .subscribe(value => this.sendNotificationToHasUSI(value));
+
+        // Conditional Validation - applyUSI
+        this.applyUSISubscription =
+            this.caForm.get('usiGroup.applyUSI')!.valueChanges
+                .subscribe(value => this.sendNotificationToApplyUSI(value));
 
         //Set Error/Validation Messages on form
         this.setMessageOnForm(this.caForm);
@@ -333,6 +339,21 @@ export class CourseApplicationComponent implements OnInit, OnDestroy {
         },
         vrt_uniquestudentidentifier: {
             required: "Please enter USI",
+        },
+        streetNumber: {
+            required: "Please enter Street Number",
+        },
+        streetName: {
+            required: "Please enter Street Name",
+        },
+        city: {
+            required: "Please enter City",
+        },
+        vrt_CityorTownofBirth: {
+            required: "Please enter City of Birth",
+        },
+        idProof: {
+            required: "Please enter ID Proof Number",
         },
     };
 
@@ -541,7 +562,6 @@ export class CourseApplicationComponent implements OnInit, OnDestroy {
         this.cms.sendTxtQualificationNotification(notifyVia);
     }
 
-    //sendHasUSINotification
     // Conditional Validation function - HasUSI
     sendNotificationToHasUSI(notifyVia: number): void {
         //debugger;
@@ -577,6 +597,53 @@ export class CourseApplicationComponent implements OnInit, OnDestroy {
         this.cms.sendHasUSINotification(notifyVia);
     }
 
+    // Conditional Validation function - ApplyUSI
+    sendNotificationToApplyUSI(notifyVia: number): void {
+        //debugger;
+        const control_streetNumber = this.caForm.get('usiGroup.streetNumber');
+        const control_streetName = this.caForm.get('usiGroup.streetName');
+        const control_city = this.caForm.get('usiGroup.city');
+        const control_state = this.caForm.get('usiGroup.state');
+        const control_vrt_CityorTownofBirth = this.caForm.get('usiGroup.vrt_CityorTownofBirth');
+        const control_vrt_CountryofBirth = this.caForm.get('usiGroup.vrt_CountryofBirth');
+        const control_vrt_CountryofResidence = this.caForm.get('usiGroup.vrt_CountryofResidence');
+        const control_idProofType = this.caForm.get('usiGroup.idProofType');
+        const control_idProof = this.caForm.get('usiGroup.idProof');
+
+        if (notifyVia == 1) {
+            control_streetNumber!.setValidators(Validators.required);
+            control_streetName!.setValidators(Validators.required);
+            control_city!.setValidators(Validators.required);
+            control_state!.setValidators(Validators.required);
+            control_vrt_CityorTownofBirth!.setValidators(Validators.required);
+            control_vrt_CountryofBirth!.setValidators(Validators.required);
+            control_vrt_CountryofResidence!.setValidators(Validators.required);
+            control_idProofType!.setValidators(Validators.required);
+            control_idProof!.setValidators(Validators.required);
+        } else {
+            control_streetNumber!.clearValidators();
+            control_streetName!.clearValidators();
+            control_city!.clearValidators();
+            control_state!.clearValidators();
+            control_vrt_CityorTownofBirth!.clearValidators();
+            control_vrt_CountryofBirth!.clearValidators();
+            control_vrt_CountryofResidence!.clearValidators();
+            control_idProofType!.clearValidators();
+            control_idProof!.clearValidators();
+        }
+        control_streetNumber!.updateValueAndValidity();
+        control_streetName!.updateValueAndValidity();
+        control_city!.updateValueAndValidity();
+        control_state!.updateValueAndValidity();
+        control_vrt_CityorTownofBirth!.updateValueAndValidity();
+        control_vrt_CountryofBirth!.updateValueAndValidity();
+        control_vrt_CountryofResidence!.updateValueAndValidity();
+        control_idProofType!.updateValueAndValidity();
+        control_idProof!.updateValueAndValidity();
+        //debugger;
+        this.cms.sendApplyUSINotification(notifyVia);
+    }
+
     ngOnDestroy() {
         this.setMessageOnControlSubscribeRef.unsubscribe();
         this.checkErrorOnControlSubscribeRef.unsubscribe();
@@ -585,6 +652,7 @@ export class CourseApplicationComponent implements OnInit, OnDestroy {
         this.vrt_studiedatkanganinstitutebendigotafebeforeSubscription.unsubscribe();
         this.txtQualificationSubscription.unsubscribe();
         this.hasUSISubscription.unsubscribe();
+        this.applyUSISubscription.unsubscribe();
         this.cms.clearSubjectMessage();
     }
 

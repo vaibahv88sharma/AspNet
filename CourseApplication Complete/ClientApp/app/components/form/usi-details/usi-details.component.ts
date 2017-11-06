@@ -49,10 +49,11 @@ export class UsiDetailsComponent
     private studentApplicationDataLookup: StudentApplicationDataLookup;
 
     private hasUSISubscription: Subscription;
-
+    private applyUSISubscription: Subscription;
     //txtQualificationSubscription: Subscription;
 
     private hasUSIHiddenControls: boolean;
+    private applyUSIHiddenControls: boolean;
     //@Input('studentNumberhide') studentNumberhidden: boolean = true;
 
 
@@ -82,6 +83,35 @@ export class UsiDetailsComponent
             } else {
                 //this.hasUSIHiddenControls = true;
                 this.usiGroupForm.controls['applyUSI'].reset();
+
+                this.usiGroupForm.controls['streetNumber'].reset();
+                this.usiGroupForm.controls['streetName'].reset();
+                this.usiGroupForm.controls['city'].reset();
+                this.usiGroupForm.controls['state'].reset();
+                this.usiGroupForm.controls['vrt_CityorTownofBirth'].reset();
+                this.usiGroupForm.controls['vrt_CountryofBirth'].reset();
+                this.usiGroupForm.controls['vrt_CountryofResidence'].reset();
+                this.usiGroupForm.controls['idProofType'].reset();
+                this.usiGroupForm.controls['idProof'].reset();
+            }
+        });
+
+        // applyUSI Radio Button Click events communication
+        this.applyUSISubscription = this.cms.getApplyUSINotification().subscribe(message => {
+            //this.studentNumberHidden = (<any>message).text == 1 ? false : true;
+            //this.opiGroupForm.patchValue({
+            //    vrt_kibtstudentidnumber: (<any>message).text == 1 ? (<any>this.opiGroupForm.get('vrt_kibtstudentidnumber')).value : ""
+            //});
+            if ((<any>message).text == 0) {
+                this.usiGroupForm.controls['streetNumber'].reset();
+                this.usiGroupForm.controls['streetName'].reset();
+                this.usiGroupForm.controls['city'].reset();
+                this.usiGroupForm.controls['state'].reset();
+                this.usiGroupForm.controls['vrt_CityorTownofBirth'].reset();
+                this.usiGroupForm.controls['vrt_CountryofBirth'].reset();
+                this.usiGroupForm.controls['vrt_CountryofResidence'].reset();
+                this.usiGroupForm.controls['idProofType'].reset();
+                this.usiGroupForm.controls['idProof'].reset();
             }
         });
     }
@@ -92,11 +122,17 @@ export class UsiDetailsComponent
             this.hasUSIHiddenControls = this.usiGroupForm.controls['hasUSI']!.value == 1 ? true : false;
             //console.log(this.hasUSIHiddenControls);
         }
+        if (this.usiGroupForm.controls['applyUSI']!.value) {
+            this.applyUSIHiddenControls = this.usiGroupForm.controls['applyUSI']!.value == 1 ? true : false;
+        } else {
+            this.applyUSIHiddenControls = false;
+        }
     }
     ngAfterViewInit() {
     }
     ngOnDestroy() {
         this.hasUSISubscription.unsubscribe();
+        this.applyUSISubscription.unsubscribe();
     }
 
 

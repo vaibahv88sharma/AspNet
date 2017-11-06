@@ -53,6 +53,8 @@
             </div>
         </div>
     </div>
+    <!--applyUSIHiddenControls--  {{applyUSIHiddenControls}}
+    t/f- {{!(applyUSIHiddenControls==true)}}-->
     <!--<div [hidden]="hasUSIHiddenControls == false">-->
     <div [hidden]="!(hasUSIHiddenControls == false)">
         <div class="form-group row">
@@ -69,6 +71,138 @@
                         <input class="form-check-input" type="radio" value="0"
                                formControlName="applyUSI"> No
                     </label>
+                </div>
+            </div>
+        </div>
+        <div [hidden]="!(applyUSIHiddenControls == true)">
+            <div class="form-group row">
+                <label for="streetNumber" class="col-4 col-form-label"
+                       [ngClass]="{'invalid-feedback': feError.streetNumber }">
+                    Street Number
+                </label>
+                <div class="col-8">
+                    <input type="text" class="form-control" id="streetNumber" name="streetNumber" placeholder="Street Number *" formControlName="streetNumber"
+                           [ngClass]="{'is-invalid': feError.streetNumber }">
+                    <span class="form-text" *ngIf="feError.streetNumber"
+                          [ngClass]="{'invalid-feedback': feError.streetNumber }">
+                        {{feError.streetNumber}}
+                    </span>
+                </div>
+            </div>
+            <div class="form-group row">
+                <label for="streetName" class="col-4 col-form-label"
+                       [ngClass]="{'invalid-feedback': feError.streetName }">
+                    Street Name
+                </label>
+                <div class="col-8">
+                    <input type="text" class="form-control" id="streetName" name="streetName" placeholder="Street Name *" formControlName="streetName"
+                           [ngClass]="{'is-invalid': feError.streetName }">
+                    <span class="form-text" *ngIf="feError.streetName"
+                          [ngClass]="{'invalid-feedback': feError.streetName }">
+                        {{feError.streetName}}
+                    </span>
+                </div>
+            </div>
+            <div class="form-group row">
+                <label for="city" class="col-4 col-form-label"
+                       [ngClass]="{'invalid-feedback': feError.city }">
+                    City
+                </label>
+                <div class="col-8">
+                    <input type="text" class="form-control" id="city" name="city" placeholder="Enter City Of Residence *" formControlName="city"
+                           [ngClass]="{'is-invalid': feError.city }">
+                    <span class="form-text" *ngIf="feError.city"
+                          [ngClass]="{'invalid-feedback': feError.city }">
+                        {{feError.city}}
+                    </span>
+                </div>
+            </div>
+            <div class="form-group row">
+                <label for="state" class="col-4 col-form-label"
+                       [ngClass]="{'invalid-feedback': feError.state}">State</label>
+                <div class="col-8">
+                    <select class="form-control" name="state" formControlName="state">
+                        <option *ngFor="let controlList of studentApplicationDataLookup?.state" [value]="controlList.stateID">
+                            {{controlList.state}}
+                        </option>
+                    </select>
+                    <span class="form-text" *ngIf="feError.state"
+                          [ngClass]="{'invalid-feedback': feError.state }">
+                        {{feError.state}}
+                    </span>
+                </div>
+            </div>
+            <div class="form-group row">
+                <label for="vrt_CityorTownofBirth" class="col-4 col-form-label"
+                       [ngClass]="{'invalid-feedback': feError.vrt_CityorTownofBirth }">
+                    City or Town of Birth
+                </label>
+                <div class="col-8">
+                    <input type="text" class="form-control" id="vrt_CityorTownofBirth" name="vrt_CityorTownofBirth" placeholder="City or Town of Birth *" formControlName="vrt_CityorTownofBirth"
+                           [ngClass]="{'is-invalid': feError.vrt_CityorTownofBirth }">
+                    <span class="form-text" *ngIf="feError.vrt_CityorTownofBirth"
+                          [ngClass]="{'invalid-feedback': feError.vrt_CityorTownofBirth }">
+                        {{feError.vrt_CityorTownofBirth}}
+                    </span>
+                </div>
+            </div>
+            <div class="form-group row">
+                <label for="vrt_CountryofBirth" class="col-4 col-form-label"
+                       [ngClass]="{'invalid-feedback': feError.vrt_CountryofBirth}">Country of Birth</label>
+                <div class="col-8">
+                    <select class="form-control" name="vrt_CountryofBirth" formControlName="vrt_CountryofBirth">
+                        <option *ngFor="let controlList of studentApplicationDataLookup?.country" [value]="controlList.countryID">
+                            {{controlList.country}}
+                        </option>
+                    </select>
+                    <span class="form-text" *ngIf="feError.vrt_CountryofBirth"
+                          [ngClass]="{'invalid-feedback': feError.vrt_CountryofBirth }">
+                        {{feError.vrt_CountryofBirth}}
+                    </span>
+                </div>
+            </div>
+            <div class="form-group row">
+                <label for="vrt_CountryofResidence" class="col-4 col-form-label"
+                       [ngClass]="{'invalid-feedback': feError.vrt_CountryofResidence}">Country of Residence</label>
+                <div class="col-8">
+                    <select class="form-control" name="vrt_CountryofResidence" formControlName="vrt_CountryofResidence">
+                        <option *ngFor="let controlList of studentApplicationDataLookup?.country" [value]="controlList.countryID">
+                            {{controlList.country}}
+                        </option>
+                    </select>
+                    <span class="form-text" *ngIf="feError.vrt_CountryofResidence"
+                          [ngClass]="{'invalid-feedback': feError.vrt_CountryofResidence }">
+                        {{feError.vrt_CountryofResidence}}
+                    </span>
+                </div>
+            </div>
+            <div class="form-group row">
+                <label for="idProofType" class="col-4 col-form-label"
+                       [ngClass]="{'invalid-feedback': feError.idProofType}">ID Proof Type</label>
+                <div class="col-8">
+                    <select class="form-control" name="idProofType" formControlName="idProofType">
+                        <option *ngFor="let controlList of studentApplicationDataLookup?.idProof" [value]="controlList.proofId">
+                            {{controlList.idProofName}}
+                        </option>
+                    </select>
+                    <span class="form-text" *ngIf="feError.idProofType"
+                          [ngClass]="{'invalid-feedback': feError.idProofType }">
+                        {{feError.idProofType}}
+                    </span>
+                </div>
+            </div>
+            <div class="form-group row">
+                <label for="idProof" class="col-4 col-form-label"
+                       [ngClass]="{'invalid-feedback': feError.idProof }">
+                    Id Proof
+                </label>
+                <div class="col-8">
+                    <input type="text" class="form-control" id="idProof" name="idProof" placeholder="Id Proof *" formControlName="idProof"
+                           [ngClass]="{'is-invalid': feError.idProof }">
+                    <span class="form-text" *ngIf="feError.idProof"
+                          [ngClass]="{'invalid-feedback': feError.idProof }">
+                        {{feError.idProof}}
+                    </span>
                 </div>
             </div>
         </div>
