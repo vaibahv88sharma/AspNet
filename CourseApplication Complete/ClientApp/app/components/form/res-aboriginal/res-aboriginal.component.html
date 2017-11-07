@@ -1,10 +1,11 @@
 ﻿<div [formGroup]="resGroupForm">
+    <!--{{resGroupForm.get('vrt_australiancitizenshipresidency')!.value}}-->
     <div class="form-group row">
         <label for="vrt_australiancitizenshipresidency" class="col-3 col-form-label"
                [ngClass]="{'invalid-feedback': feError.vrt_australiancitizenshipresidency}">Residency</label>
         <div class="col-9">
             <select class="form-control" name="vrt_australiancitizenshipresidency" id="vrt_australiancitizenshipresidency" formControlName="vrt_australiancitizenshipresidency">
-                <option *ngFor="let controlList of studentApplicationDataLookup?.vrt_australiancitizenshipresidency" [value]="controlList.residencyId">
+                <option *ngFor="let controlList of studentApplicationDataLookup?.vrt_australiancitizenshipresidency" [ngValue]="controlList"><!--[value]="controlList.residencyId">-->
                     {{controlList.vrt_australiancitizenshipresidency}}
                 </option>
             </select>
@@ -19,7 +20,7 @@
                [ngClass]="{'invalid-feedback': feError.v}">Cultural Diversity</label>
         <div class="col-9">
             <select class="form-control" name="vrt_aboriginalortorresstraitislander" id="vrt_aboriginalortorresstraitislander" formControlName="vrt_aboriginalortorresstraitislander">
-                <option *ngFor="let controlList of studentApplicationDataLookup?.vrt_aboriginalortorresstraitislander" [value]="controlList.statusId">
+                <option *ngFor="let controlList of studentApplicationDataLookup?.vrt_aboriginalortorresstraitislander" [ngValue]="controlList"><!--[value]="controlList.statusId">-->
                     {{controlList.vrt_aboriginalortorresstraitislander}}
                 </option>
             </select>

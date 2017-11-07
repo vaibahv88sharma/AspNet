@@ -1,5 +1,7 @@
 ﻿<div [formGroup]="usiGroupForm">
-
+<!--Res--{{usiGroupForm.parent.get('resGroup.vrt_australiancitizenshipresidency')!.value.type}}
+<br />ID-{{studentApplicationDataLookup?.idProof | json}}<br />
+    f- {{studentApplicationDataLookup?.idProof | customfilterarray: 'type':usiGroupForm.parent.get('resGroup.vrt_australiancitizenshipresidency')!.value.type | json}}-->
     <!--<div [hidden]="true">hihihhihihih</div>
     v-{{usiGroupForm.get("hasUSI")!.value  && usiGroupForm.get("hasUSI")!.value == 1}}-->
     <div class="form-group row">
@@ -180,8 +182,9 @@
                 <label for="idProofType" class="col-4 col-form-label"
                        [ngClass]="{'invalid-feedback': feError.idProofType}">ID Proof Type</label>
                 <div class="col-8">
-                    <select class="form-control" name="idProofType" formControlName="idProofType">
-                        <option *ngFor="let controlList of studentApplicationDataLookup?.idProof" [value]="controlList.proofId">
+                    <select class="form-control" name="idProofType" formControlName="idProofType">                        
+                        <!--<option *ngFor="let controlList of studentApplicationDataLookup?.idProof" [value]="controlList.proofId">-->
+                        <option *ngFor="let controlList of studentApplicationDataLookup?.idProof | customfilterarray: 'type':usiGroupForm.parent.get('resGroup.vrt_australiancitizenshipresidency')!.value.type" [value]="controlList.proofId">
                             {{controlList.idProofName}}
                         </option>
                     </select>

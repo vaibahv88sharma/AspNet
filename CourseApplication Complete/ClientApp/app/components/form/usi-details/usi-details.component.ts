@@ -127,6 +127,7 @@ export class UsiDetailsComponent
         } else {
             this.applyUSIHiddenControls = false;
         }
+        //console.log(this.usiGroupForm.parent.get('resGroup.vrt_australiancitizenshipresidency')!.value);//resGroup
     }
     ngAfterViewInit() {
     }

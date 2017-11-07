@@ -386,7 +386,7 @@ export class CourseApplicationComponent implements OnInit, OnDestroy {
             groupIndex: 3,
             groupName: 'resGroup',
             grouptitle: 'Residency and cultural diversity',
-            hidden: true,
+            hidden: false,
             groupValid: false,
             paginationValidation: { 'paginationValidation': new PaginationValidation(true, true, false, false, true, true, false, true, 'resGroup') }
         },
@@ -402,7 +402,7 @@ export class CourseApplicationComponent implements OnInit, OnDestroy {
             groupIndex: 5,
             groupName: 'usiGroup',
             grouptitle: 'unique student identifier (USI)',
-            hidden: true,
+            hidden: false,
             groupValid: false,
             paginationValidation: { 'paginationValidation': new PaginationValidation(true, true, false, false, true, true, false, true, 'usiGroup') }
         },
