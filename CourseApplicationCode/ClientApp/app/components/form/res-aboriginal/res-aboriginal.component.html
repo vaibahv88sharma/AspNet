@@ -1,0 +1,32 @@
+﻿<div [formGroup]="resGroupForm">
+    <div class="form-group row">
+        <label for="vrt_australiancitizenshipresidency" class="col-3 col-form-label"
+               [ngClass]="{'invalid-feedback': feError.vrt_australiancitizenshipresidency}">Residency</label>
+        <div class="col-9">
+            <select class="form-control" name="vrt_australiancitizenshipresidency" id="vrt_australiancitizenshipresidency" formControlName="vrt_australiancitizenshipresidency">
+                <option *ngFor="let controlList of studentApplicationDataLookup?.vrt_australiancitizenshipresidency" [ngValue]="controlList"><!--[value]="controlList.residencyId">-->
+                    {{controlList.vrt_australiancitizenshipresidency}}
+                </option>
+            </select>
+            <span class="form-text" *ngIf="feError.vrt_australiancitizenshipresidency"
+                  [ngClass]="{'invalid-feedback': feError.vrt_australiancitizenshipresidency }">
+                {{feError.vrt_australiancitizenshipresidency}}
+            </span>
+        </div>
+    </div>
+    <div class="form-group row">
+        <label for="vrt_aboriginalortorresstraitislander" class="col-3 col-form-label"
+               [ngClass]="{'invalid-feedback': feError.vrt_aboriginalortorresstraitislander}">Cultural Diversity</label>
+        <div class="col-9">
+            <select class="form-control" name="vrt_aboriginalortorresstraitislander" id="vrt_aboriginalortorresstraitislander" formControlName="vrt_aboriginalortorresstraitislander">
+                <option *ngFor="let controlList of studentApplicationDataLookup?.vrt_aboriginalortorresstraitislander" [ngValue]="controlList"><!--[value]="controlList.statusId">-->
+                    {{controlList.vrt_aboriginalortorresstraitislander}}
+                </option>
+            </select>
+            <span class="form-text" *ngIf="feError.vrt_aboriginalortorresstraitislander"
+                  [ngClass]="{'invalid-feedback': feError.vrt_aboriginalortorresstraitislander }">
+                {{feError.vrt_aboriginalortorresstraitislander}}
+            </span>
+        </div>
+    </div>
+</div>

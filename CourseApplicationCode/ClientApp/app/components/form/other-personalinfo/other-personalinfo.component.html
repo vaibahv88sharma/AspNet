@@ -1,0 +1,95 @@
+﻿<div [formGroup]="opiGroupForm">
+
+    <div class="form-group row">
+        <label for="birthdate" class="col-3 col-form-label"
+               [ngClass]="{'invalid-feedback': feError.birthdate }">
+            Date of Birth
+        </label>
+        <div class="col-9">
+            <input type="text" class="form-control" id="birthdate" name="birthdate" placeholder="Date of Birth" formControlName="birthdate"
+                   [ngClass]="{'is-invalid': feError.birthdate }">
+            <span class="form-text" *ngIf="feError.birthdate"
+                  [ngClass]="{'invalid-feedback': feError.birthdate }">
+                {{feError.birthdate}}
+            </span>
+        </div>
+    </div>
+    <div class="form-group row">
+        <label for="studentGender" class="col-3 col-form-label"
+               [ngClass]="{'invalid-feedback': feError.studentGender}">Gender</label>
+        <div class="col-9">
+            <select class="form-control" name="studentGender" id="studentGender" formControlName="studentGender"
+                    [ngClass]="{'is-invalid': feError.studentGender}">
+                <option style="display:none" value=""></option>
+                <option value="Male">Male</option>
+                <option value="Female">Female</option>
+                <option value="X (indeterminate/intersex/unspecified)">X (indeterminate/intersex/unspecified)</option>
+            </select>
+            <span class="form-text" *ngIf="feError.studentGender"
+                  [ngClass]="{'invalid-feedback': feError.studentGender }">
+                {{feError.studentGender}}
+            </span>
+        </div>
+    </div>
+    <div class="form-group row">
+        <label for="address1_postalcode" class="col-3 col-form-label"
+               [ngClass]="{'invalid-feedback': feError.address1_postalcode }">
+            Post Code
+        </label>
+        <div class="col-9">
+            <input type="number" class="form-control" id="address1_postalcode" name="address1_postalcode" placeholder="Post Code*" formControlName="address1_postalcode"
+                   [ngClass]="{'is-invalid': feError.address1_postalcode }">
+            <span class="form-text" *ngIf="feError.address1_postalcode"
+                  [ngClass]="{'invalid-feedback': feError.address1_postalcode }">
+                {{feError.address1_postalcode}}
+            </span>
+        </div>
+    </div>
+    <div class="form-group row">
+        <label for="vrt_whatbroughtyoutothekanganinstitutewebsite" class="col-3 col-form-label"
+               [ngClass]="{'invalid-feedback': feError.vrt_whatbroughtyoutothekanganinstitutewebsite}">What brought you to this website?</label>
+        <div class="col-9">
+            <select class="form-control" name="vrt_whatbroughtyoutothekanganinstitutewebsite" id="vrt_whatbroughtyoutothekanganinstitutewebsite" formControlName="vrt_whatbroughtyoutothekanganinstitutewebsite">
+                <option *ngFor="let controlList of studentApplicationDataLookup?.whatBroughtYouHere" [value]="controlList.reasonToChooseBKIID">
+                    {{controlList.vrt_whatbroughtyoutothekanganinstitutewebsite}}
+                </option>
+            </select>
+            <span class="form-text" *ngIf="feError.vrt_whatbroughtyoutothekanganinstitutewebsite"
+                  [ngClass]="{'invalid-feedback': feError.vrt_whatbroughtyoutothekanganinstitutewebsite }">
+                {{feError.vrt_whatbroughtyoutothekanganinstitutewebsite}}
+            </span>
+        </div>
+    </div>
+    <div class="form-group row">
+        <label class="col-3 col-form-label">Have you ever studied at Kangan Institute/Bendigo TAFE before?</label>
+        <div class="col-9">
+            <div class="form-check form-check-inline">
+                <label class="form-check-label">
+                    <input class="form-check-input" type="radio" value="1"
+                           formControlName="vrt_studiedatkanganinstitutebendigotafebefore"> Yes
+                </label>
+            </div>
+            <div class="form-check form-check-inline">
+                <label class="form-check-label">
+                    <input class="form-check-input" type="radio" value="0"
+                           formControlName="vrt_studiedatkanganinstitutebendigotafebefore"> No
+                </label>
+            </div>
+        </div>
+    </div>
+    <div class="form-group row" [hidden]="!(studentNumberHidden == true)">
+        <label for="vrt_kibtstudentidnumber" class="col-3 col-form-label"
+               [ngClass]="{'invalid-feedback': feError.vrt_kibtstudentidnumber }">
+            Kangan Institute/Bendigo TAFE Student ID Number (if known):
+        </label>
+        <div class="col-9">
+            <input type="text" class="form-control" id="vrt_kibtstudentidnumber" name="vrt_kibtstudentidnumber" placeholder="Student Number*" formControlName="vrt_kibtstudentidnumber"
+                   [ngClass]="{'is-invalid': feError.vrt_kibtstudentidnumber }">
+            <span class="form-text" *ngIf="feError.vrt_kibtstudentidnumber"
+                  [ngClass]="{'invalid-feedback': feError.vrt_kibtstudentidnumber }">
+                {{feError.vrt_kibtstudentidnumber}}
+            </span>
+        </div>
+    </div>
+
+</div>

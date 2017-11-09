@@ -1,0 +1,68 @@
+<form novalidate autocomplete="off" (ngSubmit)="save(caForm)" [formGroup]="caForm">
+    <fieldset>
+
+        <app-card-projection [tabTitle]="(formGroupMetadata | customfilter:'piGroup')[0].grouptitle" [hide]="(formGroupMetadata | customfilter:'piGroup')[0].hidden">
+            <app-personalinfo [piGrp]="caForm.get('piGroup')" [feErr]="fe">
+            </app-personalinfo>
+            <app-pagination [frmGrpNm]="(formGroupMetadata | customfilter:'piGroup')[0].groupName" [pv]="(formGroupMetadata | customfilter:'piGroup')[0].paginationValidation.paginationValidation">
+            </app-pagination>
+        </app-card-projection>
+
+        <app-card-projection [tabTitle]="(formGroupMetadata | customfilter:'ccGroup')[0].grouptitle" [hide]="(formGroupMetadata | customfilter:'ccGroup')[0].hidden">
+            <div formArrayName="ccGroup" *ngFor="let cc of getCourseCampusArray.controls; let i=index" class="border p-3 my-2">
+                <div class="row my-1" *ngIf="getCourseCampusArray.controls.length > 1">
+                    <div class="col">
+                        <span>Course {{i+1}}</span>
+                        <button type="button" name="rmCourseCampus" id="rmCourseCampus" class="btn btn-danger float-right"
+                                 (click)="removeCourseCampus(i)">
+                            <i class="fa fa-window-close" aria-hidden="true"></i>
+                        </button>
+                    </div>
+                </div>
+                <div [formGroupName]="i">
+                    <course-campus [ccGrp]="cc" [feErr]="fe" [stdntAppDataLkp]="stdAppDataLkp">
+                    </course-campus>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col my-2">
+                    <button type="button" class="btn float-right text-white" style="background-color:#0099cc;" [disabled]="!getCourseCampusArray.valid" (click)="addCourseCampus()">
+                        <i class="fa fa-plus fa-2" aria-hidden="true"></i>
+                        Add Another Course
+                    </button>
+                </div>
+            </div>
+            <app-pagination [frmGrpNm]="(formGroupMetadata | customfilter:'ccGroup')[0].groupName" [pv]="(formGroupMetadata | customfilter:'ccGroup')[0].paginationValidation.paginationValidation">
+            </app-pagination>
+        </app-card-projection>
+    
+        <app-card-projection tabTitle="Details" [tabTitle]="(formGroupMetadata | customfilter:'opiGroup')[0].grouptitle" [hide]="(formGroupMetadata | customfilter:'opiGroup')[0].hidden">
+            <other-personalinfo [opiGrp]="caForm.get('opiGroup')" [stdntAppDataLkp]="stdAppDataLkp" [feErr]="fe">
+            </other-personalinfo>
+            <app-pagination [frmGrpNm]="(formGroupMetadata | customfilter:'opiGroup')[0].groupName" [pv]="(formGroupMetadata | customfilter:'opiGroup')[0].paginationValidation.paginationValidation">
+            </app-pagination>
+        </app-card-projection>
+    
+        <app-card-projection [tabTitle]="(formGroupMetadata | customfilter:'resGroup')[0].grouptitle" [hide]="(formGroupMetadata | customfilter:'resGroup')[0].hidden">
+            <res-aboriginal [resGrp]="caForm.get('resGroup')" [feErr]="fe" [stdntAppDataLkp]="stdAppDataLkp">
+            </res-aboriginal>
+            <app-pagination [frmGrpNm]="(formGroupMetadata | customfilter:'resGroup')[0].groupName" [pv]="(formGroupMetadata | customfilter:'resGroup')[0].paginationValidation.paginationValidation"> 
+            </app-pagination>
+        </app-card-projection>
+    
+        <app-card-projection [tabTitle]="(formGroupMetadata | customfilter:'pqGroup')[0].grouptitle" [hide]="(formGroupMetadata | customfilter:'pqGroup')[0].hidden">
+            <prev-qual [pqGrp]="caForm.get('pqGroup')" [feErr]="fe" [stdntAppDataLkp]="stdAppDataLkp">
+            </prev-qual>
+            <app-pagination [frmGrpNm]="(formGroupMetadata | customfilter:'pqGroup')[0].groupName" [pv]="(formGroupMetadata | customfilter:'pqGroup')[0].paginationValidation.paginationValidation">
+            </app-pagination>
+        </app-card-projection>
+    
+        <app-card-projection [tabTitle]="(formGroupMetadata | customfilter:'usiGroup')[0].grouptitle" [hide]="(formGroupMetadata | customfilter:'usiGroup')[0].hidden">
+            <usi-details [usiGrp]="caForm.get('usiGroup')" [feErr]="fe" [stdntAppDataLkp]="stdAppDataLkp">
+            </usi-details>
+            <app-pagination [frmGrpNm]="(formGroupMetadata | customfilter:'usiGroup')[0].groupName" [pv]="(formGroupMetadata | customfilter:'usiGroup')[0].paginationValidation.paginationValidation">
+            </app-pagination>
+        </app-card-projection>
+
+    </fieldset>
+</form>        
