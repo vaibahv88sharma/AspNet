@@ -14,6 +14,8 @@ npm install tooltip.js --save
 
 npm install --save bootstrap@4.0.0-beta
 
+npm install --save bootstrap@4.0.0-beta.2
+
 #bootstrap
 	#http://getbootstrap.com/docs/4.0/getting-started/webpack/
 
