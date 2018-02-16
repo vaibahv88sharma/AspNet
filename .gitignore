@@ -257,3 +257,6 @@ $RECYCLE.BIN/
 *.feature.cs
 *.feature.xlsx.*
 *.Specs_*.html
+
+# Removing ASPNetCore2-CityInfo.API BuildingYourFirstAPIwithASP.NETCore
+ASPNetCore2-CityInfo.API BuildingYourFirstAPIwithASP.NETCore/
