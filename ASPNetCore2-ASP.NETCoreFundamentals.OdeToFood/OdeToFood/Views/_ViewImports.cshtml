@@ -1,0 +1,12 @@
+﻿@* New Item = > MVC VIEW IMPORT PAGE *@
+
+
+@using OdeToFood.Models;
+@using OdeToFood.ViewModels;
+
+
+@* --> Project Name --> it Tells Razor page to go through Project and look for any CUSTOM tag helpers (i.e. <vc:greeter></vc:greeter>) and View Components (i.e. Views/Shared/Components/Greeter/Default.cshtml) *@
+@addTagHelper *, OdeToFood
+
+
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers

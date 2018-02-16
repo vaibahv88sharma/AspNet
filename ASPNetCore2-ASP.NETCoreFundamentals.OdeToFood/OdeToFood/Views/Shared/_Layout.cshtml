@@ -1,0 +1,96 @@
+﻿@*  New Item = > MVC VIEW LAYOUT PAGE =>  Placed in Shared Folder => Thus accessible to whole application *@
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>@ViewBag.Title</title>
+    <environment include="Development">
+        <link href="~/node_modules/bootstrap/dist/css/bootstrap.css" rel="stylesheet" />
+    </environment>
+    <environment exclude="Development">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+              asp-fallback-href="~/node_modules/bootstrap/dist/css/bootstrap.css"
+              asp-fallback-test-class="sr-only"
+              asp-fallback-test-property="position"
+              asp-fallback-test-value="absolute"
+              integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous" />
+    </environment>
+</head>
+<body>
+
+    <nav class="navbar navbar-default">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <a class="navbar-brand" href="/">OdeToFood</a>
+            </div>
+            <div class="navbar-right">
+                --- View Component --- Not Accessed by URL -- Only Used Internally within Application
+                @*View Components  --  Views/Shared/Components/LoginLogout/Default.cshtml*@
+                <vc:login-logout></vc:login-logout>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container">
+        @RenderBody()
+
+        <footer>
+            @RenderSection("footer", required: false)
+
+            <div>
+                --- View Component --- Not Accessed by URL -- Only Used Internally within Application
+                @*View Components  --  Views/Shared/Components/Greeter/Default.cshtml*@
+                @*@await Component.InvokeAsync("Greeter")*@
+                <vc:greeter></vc:greeter>  @* -->  Tag Helper <VC>  --> <vc:greeter-one></vc:greeter-one> *@
+
+
+                <div>
+                    <br />
+                    <h3>Demo Purpose Only</h3>
+                    @if (User.Identity.IsAuthenticated)
+        {
+            foreach (var identity in User.Identities)
+            {
+                <h3>@identity.Name</h3>
+                <ul>
+                    @foreach (var claim in identity.Claims)
+        {
+            <li>@claim.Type -- @claim.Value</li>
+}
+                </ul>
+}
+}
+else
+{
+            <div>You are anonymous</div>
+}
+                </div>
+            </div>
+        </footer>
+    </div>
+    <environment include="Development">
+        <script src="~/node_modules/jquery/dist/jquery.js"></script>
+        <script src="~/node_modules/jquery-validation/dist/jquery.validate.js"></script>
+        <script src="~/node_modules/jquery-validation-unobtrusive/jquery.validate.unobtrusive.js"></script>
+    </environment>
+    <environment exclude="Development">
+        <script src="//code.jquery.com/jquery-3.3.1.js"
+                asp-fallback-src="~/node_modules/jquery/dist/jquery.js"
+                asp-fallback-test="window.jQuery"
+                crossorigin="anonymous"
+                integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60="></script>
+        <script src="//cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.17.0/jquery.validate.js"
+                asp-fallback-src="~/node_modules/jquery-validation/dist/jquery.validate.js"
+                asp-fallback-test="window.jQuery && window.jQuery.validator"
+                crossorigin="anonymous"
+                integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60="></script>
+        <script src="//cdnjs.cloudflare.com/ajax/libs/jquery-validation-unobtrusive/3.2.6/jquery.validate.unobtrusive.js"
+                asp-fallback-src="~/node_modules/jquery-validation-unobtrusive/jquery.validate.unobtrusive.js"
+                asp-fallback-test="window.jQuery && window.jQuery.validator && window.jQuery.validator.unobtrusive"
+                crossorigin="anonymous"
+                integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60="></script>
+    </environment>
+</body>
+</html>

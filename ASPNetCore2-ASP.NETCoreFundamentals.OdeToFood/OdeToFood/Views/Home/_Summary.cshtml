@@ -1,0 +1,22 @@
+﻿@*New Item = > MVC VIEW PAGE*@
+
+
+@model Restaurant
+<h5>--- Summary Partial View Begin ----</h5>
+<section class="panel panel-default">
+    <h3 class="panel-heading">@Model.Name</h3>
+    <div class="panel-body">
+        Cuisine: @Model.Cuisine
+    </div>
+    <div class="panel-footer">
+
+        @*  asp-action, asp-page, asp-route-id, etc. ALL are Tag helpers and are available because of _ViewImports File
+            = > MVC VIEW IMPORT PAGE *@
+
+        @*  asp-route-ID =>  here ID is the route param that needs to be sent to the 'DETAILS' action   *@
+
+        <a class="btn btn-default" asp-action="Details" asp-route-id="@Model.Id">More</a>
+        <a class="btn btn-default" asp-page="/Restaurants/Edit" asp-route-id="@Model.Id">Edit</a>
+    </div>
+</section>
+<h5>--- Summary Partial View End ----</h5>

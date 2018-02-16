@@ -1,0 +1,23 @@
+﻿@*
+    New Item = > MVC VIEW PAGE
+
+    VIEW COMPONENT's cshtml
+
+    ViewComponents => LoginLogoutViewComponent.cs
+
+*@
+
+
+<h5>View Component - LoginLogoutViewComponent - Begin </h5>
+
+@if (User.Identity.IsAuthenticated)
+{
+    <div>Hello, @User.Identity.Name</div>
+    <a class="btn btn-default" asp-controller="Account" asp-action="Logout">Logout</a>
+}
+else
+{
+    <a class="btn btn-default" asp-controller="Account" asp-action="Login">Login</a>
+}
+
+    <h5>View Component - LoginLogoutViewComponent - End </h5>
